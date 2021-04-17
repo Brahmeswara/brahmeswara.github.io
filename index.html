@@ -229,14 +229,9 @@
         <h1>3. NoSQL Data Model Design and other aspects</h1>
         <p>Let us dive deeper into each of the areas that has impact on the rest of the system design and implementation.</p>
         <table>
-        <tbody>
-        <tr>
-        <td>
+        
         <h2>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data access patterns</h2>
-        </td>
-        </tr>
-        </tbody>
-        </table>
+        
         <p>Let us take our relational schema presented in Fig 1 as the use case to model in DynamoDB using single table design approach. Here are references to few articles &nbsp;(<a href="https://www.alexdebrie.com/posts/dynamodb-single-table/">reference article 1</a>, <a href="https://www.trek10.com/blog/dynamodb-single-table-relational-modeling/">reference article 2</a>,&nbsp; ) that details about the table design in DynamoDB.</p>
         <p>The below are the read access patterns for the use case above.</p>
         <p>Table 2: Read Access Patterns</p>
@@ -568,50 +563,27 @@
         </table>
         <p>&nbsp;</p>
         <p>One need to understand how the global secondary indexes and local secondary indexes work. If you query or scan a global secondary index, you can only request attributes that are projected into the index. Global secondary index queries cannot fetch attributes from the parent table.</p>
-        <table>
-        <tbody>
-        <tr>
-        <td>
+        
         <h2>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Complex joins or queries</h2>
-        </td>
-        </tr>
-        </tbody>
-        </table>
+        
         <p>Joins and complex queries are not supported. We have modelled 1:N and 1:1 relation in the single table above. &nbsp;If you need reports and other analytics which require joins, it would have to be managed separately.</p>
-        <table>
-        <tbody>
-        <tr>
-        <td>
+        
         <h2>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Transactions</h2>
-        </td>
-        </tr>
-        </tbody>
-        </table>
+        
         <p>Recently (<a href="https://aws.amazon.com/blogs/aws/new-amazon-dynamodb-transactions/">click here for blog</a>), AWS has enhanced DynamoDB with native support for transactions. Few references to DynamoDB transactions are listed for convenience (<a href="https://www.alexdebrie.com/posts/dynamodb-transactions/">reference 1</a>, <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/transactions.html">reference 2</a>).</p>
         <p>In our use case, this is remediated as there is only single table and atomicity is provided already. If required to update multiple rows separately, transactions can be used. This is good and needed enhancement.</p>
-        <table>
-        <tbody>
-        <tr>
-        <td>
+        
         <h2>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Referential Integrity</h2>
-        </td>
-        </tr>
-        </tbody>
-        </table>
+        
         <p>Referential integrity is not supported by NoSQL databases. This has to be managed by application code.&nbsp; Of Course, looking at the table design, it has to be built into the application logic such that data is inserted correctly.</p>
         <p>&nbsp;</p>
         <p>Group name from table groups is referenced in DocumentTypes. But this has to be validated at the application-level code as part of the business logic. DynamoDB is not going to be enforce it for you.</p>
         <p>&nbsp;</p>
         <p>Similarly, documentType and Group name added to the document are to be validated at the application-level code as part of the business logic. Same with when a document is added to the business entity.</p>
         <table>
-        <tbody>
-        <tr>
-        <td>
+        
         <h2>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aggregations</h2>
-        </td>
-        </tr>
-        </tbody>
-        </table>
+        
         <p>Aggregations like sum, min, max are not supported by DynamoDB. There are some counts (childCount in BusinessEntity table) we would be updating as part of the application code when the items are added/deleted.</p>
         <p>&nbsp;</p>
         <p>If you need any other aggregations to be derived on the fly it is not supported. All of these to have managed separately using &ldquo;do it once and read many times&rdquo; approach. There are several approaches to mange this. One approach is to use DynamoDB streams, sum/aggregate using Lambda function and insert into a summary table.</p>
