@@ -12,7 +12,7 @@ left-image {
   margin:0px;   
 }
 
-table, th, td {
+table, tbody, tr, td {
   border: 1px solid black;
   border-collapse: collapse;
 }
