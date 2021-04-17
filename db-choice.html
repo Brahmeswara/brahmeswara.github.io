@@ -40,7 +40,7 @@
         <div class="card my-4">
           <h5 class="card-header">Blogs List</h5>
           <div class="card-body">
-            <a href="db-choice.html"> Database Choice: SQL or NoSQL</a>
+            <a href="db-choice/db-choice.html"> Database Choice: SQL or NoSQL</a>
           </div>
         </div>
 
@@ -178,8 +178,8 @@
         <p>&nbsp;</p>
         <p>The simple relational equivalent of the schema looks as below for the base document platform.</p>
         <p>&nbsp;</p>
-  
-        <IMG SRC="dbchoice-schema.jpg" class="left-image" >
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
         <ol>
         <li>Scalability and Performance</li>
         </ol>
@@ -411,7 +411,6 @@
         <p>&nbsp;</p>
         <p>Note, intentionally, I am using keyword &ldquo;groups&rdquo; as PK for both Group and &ldquo;doctypes&rdquo; keyword for DocumentType items. These are lookup tables and expected to have anywhere from single digit rows to couple of hundred rows at the max.&nbsp; I would like DynamoDB to keep these in one partition/shard than spreading across multiple shards/partitions.</p>
         <p>Fig 2: Single Table Design for the schema represented in Fig 1</p>
-        <IMG SRC="dynamo-table-design.jpg" align="left" >
         <p>The above single table design looks weird compared to the relational schema. But under the hood you are saving data in a format that would be faster for fetching real-time. Taking directly from the <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-general-nosql-design.html">&ldquo;DynamoDB Developer Guide&rdquo;</a> link</p>
         <p>&ldquo;<strong>Data shape</strong>: Instead of reshaping data when a query is processed (as an RDBMS system does), a NoSQL database organizes data so that its shape in the database corresponds with what will be queried. This is a key factor in increasing speed and scalability.&rdquo;</p>
         <p>NoSQL design requires a different mindset than RDBMS design. Please refer &ldquo;<a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-general-nosql-design.html">DynamoDB Developer Guide</a>&rdquo; for more details on NoSQL design. It helps a lot to have high level understanding (partitioning, LSI, GSI, index overloading, Adjacent List Patterns) of how the DynamoDB engine works also helps.</p>
