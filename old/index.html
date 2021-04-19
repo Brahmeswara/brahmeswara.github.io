@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Blog Post - Start Bootstrap Template</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/blog-post.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-3">
+
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Brahmeswara Yerrabolu</h5>
+          <div class="card-body">
+            Experienced product development professional.
+          </div>
+        </div>
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Blogs List</h5>
+          <div class="card-body">
+            <a href="db-choice.html"> Database Choice: SQL or NoSQL</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Post Content Column -->
+      <div class="col-lg-9">
+
+        <!-- Title -->
+        <h1 class="mt-4">Database Choice: SQL or NoSQL</h1>
+
+        <!-- Author -->
+        <p class="lead">
+          by
+          <a href="#">Brahmeswara R Yerrabolu </a>
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>Posted on April 17, 2021</p>
+
+        <hr>
+
+        <!-- Preview Image -->
+        <!--
+        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+        -->
+
+
+        <hr>
+
+        <!-- Post Content -->
+        <p>Recently, I started working on developing a base platform for document-based workflow and automaton services using serverless technologies. One of the requirements is massive scalability of the system with consistent performance. Like any web application, we needed to make a technical choice on the database at two levels, (a) sql or nosql (b) specific database based on the first-choice selection. &nbsp;This article is about sharing my thought process on the selection for the specific use case of ours. This article is based on AWS offerings as author is more familiar with AWS platform (and certified AWS solution architect).</p>
+        <p>This article has the following areas if you would like to jump back and forth instead of reading as one single item.</p>
+        <ul>
+        <li><a href="#_1._Use_Case">Use Case</a></li>
+        <li><a href="#_2._SQL_or">SQL or NoSQL</a></li>
+        <li><a href="#_3._NoSQL_Data">Data Model Design and Consequences</a></li>
+        <li><a href="#_4._Summary">Summary</a></li>
+        </ul>
+        <p>Note, Table and collection are used interchangeably to refer to table. Row and item is used interchangeably to refer to one row in the table.</p>
+        <h1>1. Use Case</h1>
+        <p>This use is about developing a base document platform which is scaffolding to develop further pay-per-use features.</p>
+        <p>The main use case requirements are as below.</p>
+        <ul>
+        <li>Documents are associated with a business entity.</li>
+        <li>Business entity can be anything depending on the domain.
+        <ul>
+        <li>Example, in case of accounting firms, person/company id is the business entity to which documents belongs to.</li>
+        <li>Example: In case of a legal firm, client id is the business entity where documented associated with given clients are organized.</li>
+        <li>Example: in case of loan origination, loan id is the business entity where related documents are attached.</li>
+        </ul>
+        </li>
+        <li>Each document has type associated with it.</li>
+        <li>Optionally, document type is associated with a group.</li>
+        <li>All remaining attributes of business entity or document or document type should be configurable per customer need.</li>
+        <li>Each business entity and document both have status which would drive the atomic business flows that depend on documents.</li>
+        </ul>
+        <p>Base platform above can be extended by automated workflows which are specific. Example on one such flow is extracting the data from documents and integrating back with customer systems. These flows come with built-in task management capabilities for queueing and picking up the task and monitoring the work queues. In summary, these extended flows may add more attributes the core entities or they may have separate items/tables defined which depend on core entities.</p>
+        <h1>2. SQL or NoSQL</h1>
+        <p>Main comparison criteria between SQL and NoSQL (here are few references &nbsp;<a href="https://www.youtube.com/watch?v=6yqfmXiZTlM">AWS re:invent 2019</a>&nbsp; &amp; <a href="2020:%20Part%201:%20https:/www.youtube.com/watch?v=MF9a1UNOAQo">AWS re:invent 2020 Part 1</a> &amp; <a href="https://www.youtube.com/watch?v=_KNrRdWD25M">Part 2</a> <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.WhyDynamoDB.html">. &nbsp;&nbsp;AWS link </a>&nbsp;<a href="https://blog.couchbase.com/comparison-sql-nosql-simplify-database-decision/">Another article</a> that describes more about NoSQL DynamoDB) are listed below for convenience reference. &nbsp;Table 1 below is taken directly from the references listed above.</p>
+        <p>Table 1: Why NoSQL?</p>
+        <table>
+        <tbody>
+        <tr>
+        <td colspan="2" width="601">
+        <p>Why NoSQL?</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="301">
+        <p>SQL</p>
+        </td>
+        <td width="301">
+        <p>NoSQL</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="301">
+        <p>Optimized for Storage</p>
+        </td>
+        <td width="301">
+        <p>Optimized for Compute</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="301">
+        <p>Normalized/Relational</p>
+        </td>
+        <td width="301">
+        <p>Denormalized/hierarchical</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="301">
+        <p>Ad Hoc Queries</p>
+        </td>
+        <td width="301">
+        <p>Instantiated Views</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="301">
+        <p>Scale Vertically</p>
+        </td>
+        <td width="301">
+        <p>Scale Horizontally</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="301">
+        <p>Good for OLAP</p>
+        </td>
+        <td width="301">
+        <p>Built for OLTP at scale</p>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        <p>&nbsp;</p>
+        <p>Coming back to the requirements, there are few key things that makes NoSQL better choice for the use case above.</p>
+        <ol>
+        <li>Dynamic Schema (or schemeless approach)</li>
+        </ol>
+        <p>Dynamic schema flexibility is important differentiating factor as per the use case. All we know from use case is that</p>
+        <ul>
+        <li>We have core entities which can be identified by unique keys either provided by customer or generated.</li>
+        <li>Relationship between core entities.</li>
+        <li>Rest of the attributes are configurable by the customer.</li>
+        <li>These attributes vary from customer to customer.</li>
+        </ul>
+        <p>&nbsp;</p>
+        <p>DynamoDB is schemeless. Every table must have a primary key to uniquely identify each data item, but there are no similar constraints on other non-key attributes</p>
+        <p>&nbsp;</p>
+        <p>The simple relational equivalent of the schema looks as below for the base document platform.</p>
+        <p>&nbsp;</p>
+  
+        <img src="dbchoice-schema.jpg" class="left-image" >
+        <ol>
+        <li>Scalability and Performance</li>
+        </ol>
+        <p>Other critical requirements is that database should provide consistent response time <strong><u>at any scale</u></strong> ( <a href="https://www.alexdebrie.com/posts/dynamodb-no-bad-queries/">Another good reference</a> on the scalability and performance).</p>
+        <p>This has been important design consideration for two reasons.</p>
+        <ol>
+        <li>Customer experience</li>
+        <li>Cost
+        <ol>
+        <li>As I mentioned earlier, plan is to go serverless full stack. Cost of serverless infra goes higher if the memory, compute and execution time are not under control. We are not sure yet we will be using lambda functions, but play with the lambda cost calculator changing the memory and execution time to see the impact.</li>
+        </ol>
+        </li>
+        </ol>
+        <p>&nbsp;</p>
+        <p>AWS DynamoDB provides single digit millisecond performance if the data is modelled properly within its boundaries and limits.</p>
+        <p>NoSQL scales horizontally due to the way it is architected. There are limits on how you use the system and this makes the system bounded for better performance. In NoSQL databases in general, data can be efficiently queried in limited number of ways, outside of which queries become slow and expensive.</p>
+        <p>Every major architectural decision has pros and cons and has some consequences on how you design and implement the rest of the system. The negative consequences of the decision are to be managed appropriately. Decision to go with NoSQL has the following consequences which I would elaborate in detail further.</p>
+        <ol>
+        <li>Clear understanding of the data access patterns and usage</li>
+        <li>No complex joins and queries.</li>
+        <li>Atomicity of the transactions.</li>
+        <li>Referential Integrity</li>
+        <li>Aggregations</li>
+        <li>Sorting</li>
+        <li>Pagination</li>
+        </ol>
+        <p>As far as which vendor to go with, given that we are using AWS as cloud platform and it serverless features, it would be easier to go with DynamoDB. MongoDB also offers managed services.</p>
+        <p>&nbsp;AWS offers DynamoDB with some very interesting capabilities (which otherwise requires resources with deep expertise) as below.</p>
+        <p>DynamoDB is fully managed, NoSQL database that provides fast and predictable performance with seamless capability. &nbsp;Few references to origins of DynamoDB (<a href="https://www.allthingsdistributed.com/2007/10/amazons_dynamo.html">Amazon's Dynamo whitepaper</a>)</p>
+        <ol>
+        <li>Supports semi-structured and unstructured data</li>
+        <li>Supports bot document and key-value data</li>
+        <li>It has flexible schema (sometimes referred as schema-less)</li>
+        <li>It uses HTTPS as transport</li>
+        <li><strong>Unlimited scaling without downtime or performance degradation</strong></li>
+        <li><strong>Provided single digit milliseconds latency at any scale</strong></li>
+        <li>It has multi-region and multi-master features.</li>
+        <li>It is durable database and has built-in backup and restore, in-memory caching and security features.</li>
+        </ol>
+        <p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html">Click here</a> to view the DynamoDB developer guide which has detailed explanations. Let us dive deeper into each of the areas that are consequences of decision to go with NoSQL.</p>
+        <p>DynamoDB limits:</p>
+        <ol start="2">
+        <li>Max record size should be 400KB</li>
+        <li>Size limit on Query and Scan data</li>
+        <li>DynamoDB has two APIs for fetching a range of items in a single request. The&nbsp;<a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html">Query</a>operation will fetch a range of items that have the same partition key, whereas the&nbsp;<a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html">Scan</a>&nbsp;operation will fetch a range of items from your entire table.</li>
+        </ol>
+        <h1>3. NoSQL Data Model Design and other aspects</h1>
+        <p>Let us dive deeper into each of the areas that has impact on the rest of the system design and implementation.</p>
+        <table>
+        
+        <h2>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data access patterns</h2>
+        
+        <p>Let us take our relational schema presented in Fig 1 as the use case to model in DynamoDB using single table design approach. Here are references to few articles &nbsp;(<a href="https://www.alexdebrie.com/posts/dynamodb-single-table/">reference article 1</a>, <a href="https://www.trek10.com/blog/dynamodb-single-table-relational-modeling/">reference article 2</a>,&nbsp; ) that details about the table design in DynamoDB.</p>
+        <p>The below are the read access patterns for the use case above.</p>
+        <p>Table 2: Read Access Patterns</p>
+        <table>
+        <tbody>
+        <tr>
+        <td width="56">
+        <p>Sl. No</p>
+        </td>
+        <td width="545">
+        <p>Access Pattern</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="56">
+        <p>1</p>
+        </td>
+        <td width="545">
+        <p>Get all the group names</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="56">
+        <p>2</p>
+        </td>
+        <td width="545">
+        <p>Get all the document types</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="56">
+        <p>3</p>
+        </td>
+        <td width="545">
+        <p>Get a business entity by its ID</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="56">
+        <p>4</p>
+        </td>
+        <td width="545">
+        <p>Get a document by its ID</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="56">
+        <p>5</p>
+        </td>
+        <td width="545">
+        <p>Get all the document associated with a given business entity</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="56">
+        <p>6</p>
+        </td>
+        <td width="545">
+        <p>Get all the document associated with a given business entity by document status</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="56">
+        <p>7</p>
+        </td>
+        <td width="545">
+        <p>Get all the document associated with a given business entity by document type name</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="56">
+        <p>8</p>
+        </td>
+        <td width="545">
+        <p>Get all the document associated with a given business entity by group name</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="56">
+        <p>9</p>
+        </td>
+        <td width="545">
+        <p>Get all business entities</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="56">
+        <p>10</p>
+        </td>
+        <td width="545">
+        <p>Get all documents (across business entities) for a given document status</p>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        <p>&nbsp;</p>
+        <p>Table 3: Entities and their PK (Partition key), SK (Sort Key)</p>
+        <table style="border-color: black;">
+        <tbody>
+        <tr style="height: 34.7709px;">
+        <td style="height: 34.7709px;" width="150">
+        <p>Entity</p>
+        </td>
+        <td style="height: 34.7709px;" width="150">
+        <p>PK</p>
+        </td>
+        <td style="height: 34.7709px;" width="150">
+        <p>SK</p>
+        </td>
+        <td style="height: 34.7709px;" width="150">
+        <p>Reamarks</p>
+        </td>
+        </tr>
+        <tr style="height: 34px;">
+        <td style="height: 34px;" width="150">
+        <p>Group</p>
+        </td>
+        <td style="height: 34px;" width="150">
+        <p>&ldquo;groups&rdquo;</p>
+        </td>
+        <td style="height: 34px;" width="150">
+        <p>Group Name</p>
+        </td>
+        <td style="height: 34px;" width="150">
+        <p>&nbsp;</p>
+        </td>
+        </tr>
+        <tr style="height: 34px;">
+        <td style="height: 34px;" width="150">
+        <p>DocumentType</p>
+        </td>
+        <td style="height: 34px;" width="150">
+        <p>&ldquo;doctypes&rdquo;</p>
+        </td>
+        <td style="height: 34px;" width="150">
+        <p>Doc Type Name</p>
+        </td>
+        <td style="height: 34px;" width="150">
+        <p>&nbsp;</p>
+        </td>
+        </tr>
+        <tr style="height: 34px;">
+        <td style="height: 34px;" width="150">
+        <p>Business Entity</p>
+        </td>
+        <td style="height: 34px;" width="150">
+        <p>Business Entity Id</p>
+        </td>
+        <td style="height: 34px;" width="150">
+        <p>&ldquo;entity&rdquo;</p>
+        </td>
+        <td style="height: 34px;" width="150">
+        <p>&nbsp;</p>
+        </td>
+        </tr>
+        <tr style="height: 48px;">
+        <td style="height: 48px;" width="150">
+        <p>Document</p>
+        </td>
+        <td style="height: 48px;" width="150">
+        <p>Business Entity Id</p>
+        </td>
+        <td style="height: 48px;" width="150">
+        <p>Doc#&lt;document id&gt;:lm#&lt;date&gt;:status#&lt;status&gt;</p>
+        </td>
+        <td style="height: 48px;" width="150">
+        <p>&nbsp;</p>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        <p>&nbsp;</p>
+        <p>Note, intentionally, I am using keyword &ldquo;groups&rdquo; as PK for both Group and &ldquo;doctypes&rdquo; keyword for DocumentType items. These are lookup tables and expected to have anywhere from single digit rows to couple of hundred rows at the max.&nbsp; I would like DynamoDB to keep these in one partition/shard than spreading across multiple shards/partitions.</p>
+        <p>Fig 2: Single Table Design for the schema represented in Fig 1</p>
+        <img src="dynamo-table-design.jpg" class="left-image" >
+        <p>The above single table design looks weird compared to the relational schema. But under the hood you are saving data in a format that would be faster for fetching real-time. Taking directly from the <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-general-nosql-design.html">&ldquo;DynamoDB Developer Guide&rdquo;</a> link</p>
+        <p>&ldquo;<strong>Data shape</strong>: Instead of reshaping data when a query is processed (as an RDBMS system does), a NoSQL database organizes data so that its shape in the database corresponds with what will be queried. This is a key factor in increasing speed and scalability.&rdquo;</p>
+        <p>NoSQL design requires a different mindset than RDBMS design. Please refer &ldquo;<a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-general-nosql-design.html">DynamoDB Developer Guide</a>&rdquo; for more details on NoSQL design. It helps a lot to have high level understanding (partitioning, LSI, GSI, index overloading, Adjacent List Patterns) of how the DynamoDB engine works also helps.</p>
+        <p>Note, in the use case used, business entity Id is unique and is entered/managed by customer. Document id is generated and must be unique.</p>
+        <p>Well, is the single-table design is only option we have in NoSQL modelling? There is one another alternative than single table design that is having separate tables and use graphql. &nbsp;But irrespective of single table or multi-table, you must design these based on the access patterns.</p>
+        <p>One reason I did not consider using graphql approach is that (a) use case requires to have flexible schema (custom attributes) where customer configures the attributes and uses. It is not clear to me how to go about doing this in graphql when your attributes are not defined ahead. (b)&nbsp; I might have to add additional secondary indexes based on the custom configuration of the attributes/usage based on customer needs.</p>
+        <p>Table 5: Query Conditions for the access patterns from Table 2.</p>
+        <table>
+        <tbody>
+        <tr>
+        <td width="43">
+        <p>Sl. No</p>
+        </td>
+        <td width="297">
+        <p>Access Pattern</p>
+        </td>
+        <td width="261">
+        <p>Query Conditions</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>1</p>
+        </td>
+        <td width="297">
+        <p>Get all the group names</p>
+        </td>
+        <td width="261">
+        <p>Use PK = &ldquo;groups&rdquo;</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>2</p>
+        </td>
+        <td width="297">
+        <p>Get all the document types</p>
+        </td>
+        <td width="261">
+        <p>Use PK = &ldquo;doctypes&rdquo;</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>3</p>
+        </td>
+        <td width="297">
+        <p>Get a business entity by its ID</p>
+        </td>
+        <td width="261">
+        <p>Use PK = &lt;entity ID&gt; and sk = &ldquo;entity&rdquo;</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>4</p>
+        </td>
+        <td width="297">
+        <p>Get a document by its ID and business entity</p>
+        </td>
+        <td width="261">
+        <p>Use PK = &lt;entity ID&gt; and SK = begins_with(doc#document id)</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>5</p>
+        </td>
+        <td width="297">
+        <p>Get all the document associated with a given business entity</p>
+        </td>
+        <td width="261">
+        <p>Use PK = &lt;entity ID&gt;</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>6</p>
+        </td>
+        <td width="297">
+        <p>Get all the document associated with a given business entity by document status</p>
+        </td>
+        <td width="261">
+        <p>Use PK = &lt;entity ID&gt; and SK = contains(status:&lt;status&gt;)</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>7</p>
+        </td>
+        <td width="297">
+        <p>Get all the document associated with a given business entity by document type name</p>
+        </td>
+        <td width="261">
+        <p>Use PK = &lt;entity ID&gt; and SK = contains(documenttype:&lt;type&gt;)</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>8</p>
+        </td>
+        <td width="297">
+        <p>Get all the document associated with a given business entity by group name</p>
+        </td>
+        <td width="261">
+        <p>Use PK = &lt;entity ID&gt; and SK = contains(group:&lt;group name&gt;)</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>9</p>
+        </td>
+        <td width="297">
+        <p>Get all business entities</p>
+        </td>
+        <td width="261">
+        <p>Use GS1 SK = &ldquo;entity&rdquo;</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>10</p>
+        </td>
+        <td width="297">
+        <p>Get all documents (across business entities) for a given document status</p>
+        </td>
+        <td width="261">
+        <p>Use GS1 PK = contains(&ldquo;status#&lt;status&gt;&rdquo;)</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>11</p>
+        </td>
+        <td width="297">
+        <p>Get all documents (across business entities) for given Document type name</p>
+        </td>
+        <td width="261">
+        <p>Not used access pattern</p>
+        </td>
+        </tr>
+        <tr>
+        <td width="43">
+        <p>12</p>
+        </td>
+        <td width="297">
+        <p>Get all documents (across business entities) for given group name</p>
+        </td>
+        <td width="261">
+        <p>Not used access pattern</p>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        <p>&nbsp;</p>
+        <p>One need to understand how the global secondary indexes and local secondary indexes work. If you query or scan a global secondary index, you can only request attributes that are projected into the index. Global secondary index queries cannot fetch attributes from the parent table.</p>
+        
+        <h2>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Complex joins or queries</h2>
+        
+        <p>Joins and complex queries are not supported. We have modelled 1:N and 1:1 relation in the single table above. &nbsp;If you need reports and other analytics which require joins, it would have to be managed separately.</p>
+        
+        <h2>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Transactions</h2>
+        
+        <p>Recently (<a href="https://aws.amazon.com/blogs/aws/new-amazon-dynamodb-transactions/">click here for blog</a>), AWS has enhanced DynamoDB with native support for transactions. Few references to DynamoDB transactions are listed for convenience (<a href="https://www.alexdebrie.com/posts/dynamodb-transactions/">reference 1</a>, <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/transactions.html">reference 2</a>).</p>
+        <p>In our use case, this is remediated as there is only single table and atomicity is provided already. If required to update multiple rows separately, transactions can be used. This is good and needed enhancement.</p>
+        
+        <h2>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Referential Integrity</h2>
+        
+        <p>Referential integrity is not supported by NoSQL databases. This has to be managed by application code.&nbsp; Of Course, looking at the table design, it has to be built into the application logic such that data is inserted correctly.</p>
+        <p>&nbsp;</p>
+        <p>Group name from table groups is referenced in DocumentTypes. But this has to be validated at the application-level code as part of the business logic. DynamoDB is not going to be enforce it for you.</p>
+        <p>&nbsp;</p>
+        <p>Similarly, documentType and Group name added to the document are to be validated at the application-level code as part of the business logic. Same with when a document is added to the business entity.</p>
+        <table>
+        
+        <h2>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aggregations</h2>
+        
+        <p>Aggregations like sum, min, max are not supported by DynamoDB. There are some counts (childCount in BusinessEntity table) we would be updating as part of the application code when the items are added/deleted.</p>
+        <p>&nbsp;</p>
+        <p>If you need any other aggregations to be derived on the fly it is not supported. All of these to have managed separately using &ldquo;do it once and read many times&rdquo; approach. There are several approaches to mange this. One approach is to use DynamoDB streams, sum/aggregate using Lambda function and insert into a summary table.</p>
+        <h2>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sorting</h2>
+        <p>Sorting is restricted in DynamoDB. Items with the same partition key value are stored in sorted order by sort key.</p>
+        <p>If&nbsp;ScanIndexForward&nbsp;is&nbsp;true, DynamoDB returns the results in the order in which they are stored (by sort key value). This is the default behavior. If&nbsp;ScanIndexForward&nbsp;is&nbsp;false, DynamoDB reads the results in reverse order by sort key value, and then returns the results to the client.</p>
+        <p>You need to be cognizant of this so that if you have grid or similar widget, you cannot sort by multiple grid columns or any column of your choice. You might want to look at your ui flow/design such that you can provide local filters and/or global filters or provide some kind of search and view details approaches.</p>
+        <p>One need to re-look at their requirements as providing unlimited data on the ui screen. Just not efficient neither to the user or to the backend that is fetching these.</p>
+        <h2>7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Paginations</h2>
+        <p>DynamoDB query/scan does not fetch all the items. These are paginated. This is a good feature where pagination is provided by default.</p>
+        <h1>4. Summary</h1>
+        <p>NoSQL databases are architected for horizontal scalability. There are limits on how you use the system and this makes the system bounded for better performance. These limits guide you to plan your application access patterns and design your data model, upfront, so that your database provides predictable performance at any scale. Instead of reshaping data when a query is processed (as an RDBMS system does), a NoSQL database organizes data so that its shape in the database corresponds with what will be queried. This is a key factor in increasing speed and scalability.</p>
+        <p>NoSQL design requires a different mindset than RDBMS design and has learning curve.&nbsp; Several things that you take for granted in RDMS world (like referential data integrity, aggregations) become application concerns to be managed. DynamoDB streams certainly provides cleaner and easier approach to manage these concerns at the application level but requires additional effort. DynamoDB avoids any piece of functionality (compared to RDBMS, in traditional RDBMS these are joins, aggregations, referential integrity, sorting on any column) that impacts speed and scalability.</p>
+        <p>Sorting is limited to sort keys (primary or indexes). Pagination is provided as part of the query/scan operations which is nice feature.</p>
+        <p>AWS documentation need to improve to explain the under the hood details so that developer can design with better understanding. AWS documentation is not clear on how it manages the global secondary indexes. All it says is &ldquo;&rdquo;.&nbsp; If you project all , then entire table goes to index data (assuming your data does not cause sparse indexes).</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;&nbsp;</p>
+    <hr>
+
+  </div>
+
+</div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
