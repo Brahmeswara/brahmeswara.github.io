@@ -122,7 +122,7 @@
 		collection are used interchangeably to refer to table. Row and item
 		is used interchangeably to refer to one row in the table.</P>
 		<H1 CLASS="western"><A NAME="_1._Use_Case"></A>1. Use Case</H1>
-		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">This use is about
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">This usecase is about
 		developing a base document platform which is scaffolding to develop
 		further pay-per-use features. 
 		</P>
@@ -167,12 +167,12 @@
 		</P>
 		<H1 CLASS="western"><A NAME="_2._SQL_or"></A>2. SQL or NoSQL</H1>
 		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Main comparison
-		criteria between SQL and NoSQL (here are few references  <A HREF="https://www.youtube.com/watch?v=6yqfmXiZTlM">AWS
-		re:invent 2019</A>  &amp; <A HREF="2020:%20Part%201:%20https:/www.youtube.com/watch?v=MF9a1UNOAQo">AWS
+		criteria between SQL and NoSQL [Here are few references  (a). <A HREF="https://www.youtube.com/watch?v=6yqfmXiZTlM">AWS
+		re:invent 2019</A>  &amp;(b). <A HREF="2020:%20Part%201:%20https:/www.youtube.com/watch?v=MF9a1UNOAQo">AWS
 		re:invent 2020 Part 1</A> &amp; <A HREF="https://www.youtube.com/watch?v=_KNrRdWD25M">Part
-		2</A> <A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.WhyDynamoDB.html">.
-		  AWS link </A> <A HREF="https://blog.couchbase.com/comparison-sql-nosql-simplify-database-decision/">Another
-		article</A> that describes more about NoSQL DynamoDB) are listed
+		2</A> (c). <A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.WhyDynamoDB.html">.
+		  AWS DynamoDB Developer Guide </A> (d). <A HREF="https://blog.couchbase.com/comparison-sql-nosql-simplify-database-decision/">Another
+		article</A> that describes more about NoSQL DynamoDB] are listed
 		below for convenience reference.  Table 1 below is taken directly
 		from the references listed above. 
 		</P>
@@ -240,10 +240,12 @@
 		<P STYLE="margin-bottom: 0.11in">Coming back to the requirements,
 		there are few key things that makes NoSQL better choice for the use
 		case above.</P>
-		<OL TYPE=A>
+		<b>
+		<OL TYPE=A >
 			<LI><P STYLE="margin-bottom: 0.11in">Dynamic Schema (or schemeless
 			approach)</P>
 		</OL>
+		</b>
 		<P STYLE="margin-bottom: 0.11in">Dynamic schema flexibility is
 		important differentiating factor as per the use case. All we know
 		from use case is that 
@@ -270,16 +272,18 @@
 		</P>
 		<!-- <P ALIGN=JUSTIFY STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><BR><BR>
 		</P>
+		-->
 		<P ALIGN=JUSTIFY STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><BR><BR>
 		</P>
-		-->
-		<P ALIGN=JUSTIFY STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><IMG SRC="database-choice-schema.png" NAME="Picture 1" ALIGN=BOTTOM WIDTH=616 HEIGHT=244 BORDER=0></P>
+		<P ALIGN=JUSTIFY STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><IMG SRC="databasechoiceschema.png" NAME="Picture 1" ALIGN=BOTTOM WIDTH=616 HEIGHT=244 BORDER=0></P>
 		<!-- <P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><BR><BR>
 		</P> -->
+		<b>
 		<OL TYPE=A START=2>
 			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Scalability and
 			Performance</P>
 		</OL>
+		</b>
 		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Other critical
 		requirements is that database should provide consistent response time
 		<U><B>at any scale</B></U> ( One <A HREF="https://www.alexdebrie.com/posts/dynamodb-no-bad-queries/">good
@@ -334,13 +338,13 @@
 		resources with deep expertise) as below.</P>
 		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">DynamoDB is fully
 		managed, NoSQL database that provides fast and predictable
-		performance with seamless capability.  Few references to origins of
-		DynamoDB (<A HREF="https://www.allthingsdistributed.com/2007/10/amazons_dynamo.html">Amazon's
-		Dynamo whitepaper</A>)</P>
+		performance with seamless capability.  Here is (<A HREF="https://www.allthingsdistributed.com/2007/10/amazons_dynamo.html">Amazon's
+		Dynamo whitepaper</A>) one good reference to the origins of
+		DynamoDB</P>
 		<OL>
 			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Supports
 			semi-structured and unstructured data</P>
-			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Supports bot
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Supports both
 			document and key-value data</P>
 			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">It has flexible
 			schema (sometimes referred as schema-less)</P>
@@ -362,12 +366,12 @@
 		consequences of decision to go with NoSQL.</P>
 		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">The following are the
 		DynamoDB limits, as of Apr-2021</P>
-		<OL START=2>
+		<OL START=1>
 			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#222222">An
 			individual record in DynamoDB is called an item, and a single
 			DynamoDB item cannot exceed 400KB.</FONT></P>
 			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#222222">Page
-			Size limit on Query and Scan data </FONT>
+			Size limit 1 MB on Query and Scan data </FONT>
 			</P>
 			<OL TYPE=a>
 				<LI><P ALIGN=JUSTIFY STYLE="margin-top: 0.19in; margin-bottom: 0.19in; line-height: 100%">
@@ -398,11 +402,13 @@
 		with DynamodB above) that has impact on the rest of the
 		application/product design and implementation.</P>
 		<P STYLE="margin-bottom: 0.11in"><SPAN ID="Frame1" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
+			<b>
 			<OL>
-				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in">Design
-				approach</H2>
+				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Design
+				approach</b></H2>
 			</OL>
-		</SPAN><BR CLEAR=LEFT><FONT COLOR="#16191f">Please refer to the </FONT><A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-general-nosql-design.html#bp-general-nosql-design-concepts">link</A><FONT COLOR="#16191f">
+			</b>
+		<FONT COLOR="#16191f">Please refer to the </FONT><A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-general-nosql-design.html#bp-general-nosql-design-concepts">link</A><FONT COLOR="#16191f">
 		from Dyanmo DB Developer Guide for more details. </FONT>There are two
 		key concepts in NoSQL Design.
 		</P>
@@ -474,11 +480,11 @@
 		queries than your main table can support, and that are still fast and
 		relatively inexpensive</SPAN></FONT><FONT COLOR="#16191f"><FONT FACE="Arial, serif"><SPAN STYLE="background: #ffffff">.</SPAN></FONT></FONT></P>
 		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><SPAN ID="Frame2" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
-			<OL START=2>
-				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in">Data
-				access patterns 
+			<b><OL START=2>
+				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Data
+				access patterns </b> </H2> </LI>
 				</H2>
-			</OL>
+			</OL></b>
 		<!-- </SPAN><BR CLEAR=LEFT> --> Let us take our relational schema presented in
 		Fig. 1 as the use case to model in DynamoDB using single table design
 		approach. Here are references to few articles  (<A HREF="https://www.alexdebrie.com/posts/dynamodb-single-table/">reference
@@ -905,10 +911,10 @@
 		index. Global secondary index queries cannot fetch attributes from
 		the parent table.</SPAN></FONT></P>
 		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><SPAN ID="Frame3" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
-			<OL START=3>
-				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in">Complex
-				joins or queries</H2>
-			</OL>
+			<b><OL START=3>
+				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Complex
+				joins or queries</b></H2>
+			</OL></b>
 		<!-- </SPAN><BR CLEAR=LEFT> --> Joins and complex queries are not supported. We
 		have modelled 1:N and 1:1 relation in the single table above.  If you
 		need reports and other analytics which require joins, it would have
@@ -921,7 +927,7 @@
 		plan is to use DynamoDB streams to manage this requirement.</P>
 		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><SPAN ID="Frame4" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
 			<OL START=4>
-				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in">Transactions</H2>
+				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Transactions</b></H2>
 			</OL>
 		<!-- </SPAN><BR CLEAR=LEFT> --> Recently (<A HREF="https://aws.amazon.com/blogs/aws/new-amazon-dynamodb-transactions/">click
 		here for blog</A>), AWS has enhanced DynamoDB with native support for
@@ -936,8 +942,8 @@
 		can be used. This is good and needed enhancement.</P>
 		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><SPAN ID="Frame5" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
 			<OL START=5>
-				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in">Referential
-				Integrity 
+				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Referential
+				Integrity </b>
 				</H2>
 			</OL>
 		<!-- </SPAN><BR CLEAR=LEFT> --> Referential integrity is not supported by NoSQL
@@ -960,7 +966,7 @@
 		</P>
 		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><SPAN ID="Frame6" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
 			<OL START=6>
-				<BR CLEAR=LEFT> <LI><H2 CLASS="western" STYLE="border: none; padding: 0in">Aggregations</H2>
+				<BR CLEAR=LEFT> <LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Aggregations</b></H2>
 			</OL>
 		<!-- </SPAN><BR CLEAR=LEFT> --> Aggregations like sum, min, max are not
 		supported by DynamoDB. There are some counts (childCount in
@@ -980,7 +986,7 @@
 		mandate change log to be available for compliance reasons and/or to
 		have the data streamed to reporting system.</P>
 		<OL START=7>
-			<LI><H2 CLASS="western">Sorting</H2>
+			<LI><H2 CLASS="western"><b>Sorting</b></H2>
 		</OL>
 		<P STYLE="margin-bottom: 0.11in">Sorting is restricted in DynamoDB.
 		<FONT COLOR="#16191f">Items with the same partition key value are
@@ -1005,7 +1011,7 @@
 		efficient neither to the user or to the health of the backend that is
 		fetching these.</P>
 		<OL START=8>
-			<LI><H2 CLASS="western">Paginations</H2>
+			<LI><H2 CLASS="western"><b>Paginations</b></H2>
 		</OL>
 		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">DynamoDB query/scan
 		does not fetch all the items. These are paginated as there is a limit
