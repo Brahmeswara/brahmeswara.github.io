@@ -5,10 +5,38 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  
+  	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+	<META NAME="AUTHOR" CONTENT="Brahmeswara">
+	<META NAME="CREATED" CONTENT="20210411;44100000000000">
+	<META NAME="CHANGEDBY" CONTENT="Brahmeswara">
+	<META NAME="CHANGED" CONTENT="20210419;81600000000000">
+	<META NAME="AppVersion" CONTENT="16.0000">
+	<META NAME="DocSecurity" CONTENT="0">
+	<META NAME="HyperlinksChanged" CONTENT="false">
+	<META NAME="LinksUpToDate" CONTENT="false">
+	<META NAME="ScaleCrop" CONTENT="false">
+	<META NAME="ShareDoc" CONTENT="false">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 1in }
+		P { margin-bottom: 0.08in; direction: ltr; widows: 2; orphans: 2 }
+		H1 { margin-bottom: 0in; direction: ltr; color: #2f5496; page-break-inside: avoid; widows: 2; orphans: 2 }
+		H1.western { font-family: "Calibri Light", serif; font-size: 16pt }
+		H1.cjk { font-size: 16pt }
+		H1.ctl { font-family: ; font-size: 16pt; font-weight: normal }
+		H2 { margin-left: 0.25in; margin-top: 0in; margin-bottom: 0in; direction: ltr; color: #2f5496; page-break-inside: avoid; widows: 2; orphans: 2 }
+		H2.western { font-family: "Calibri Light", serif; font-size: 13pt; font-weight: normal }
+		H2.cjk { font-family: "Arial"; font-size: 13pt; font-weight: normal }
+		H2.ctl { font-family: ; font-size: 13pt; font-weight: normal }
+		A:link { color: #0000ff; so-language: zxx }
+	-->
+	</STYLE>
 
-  <title>Blog Post - Start Bootstrap Template</title>
+
+  <title>Blog Post - Database Choide: SQL or NoSQL?</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,33 +51,33 @@
 
   <!-- Page Content -->
   <div class="container">
-
     <div class="row">
-
+	
       <!-- Sidebar Widgets Column -->
       <div class="col-md-3">
-
         <!-- Side Widget -->
         <div class="card my-4">
           <h5 class="card-header">Brahmeswara Yerrabolu</h5>
           <div class="card-body">
-            Experienced product development professional.
+            Experienced product development professional. Certified AWS Solution Architect Associate.
           </div>
         </div>
         <!-- Side Widget -->
         <div class="card my-4">
           <h5 class="card-header">Blogs List</h5>
           <div class="card-body">
+            <a href="sl-ms.html"> Architecting and Organizing: Serverless Microservices</a>
+            <hr>
             <a href="db-choice.html"> Database Choice: SQL or NoSQL</a>
           </div>
         </div>
-
-      </div>
+      </div> 
+	  <!-- end of left side widget -->
 
       <!-- Post Content Column -->
       <div class="col-lg-9">
-
-        <!-- Title -->
+	
+	    <!-- Title -->
         <h1 class="mt-4">Database Choice: SQL or NoSQL</h1>
 
         <!-- Author -->
@@ -65,549 +93,968 @@
 
         <hr>
 
-        <!-- Preview Image -->
-        <!--
-        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
-        -->
-
-
-        <hr>
 
         <!-- Post Content -->
-        <p>Recently, I started working on developing a base platform for document-based workflow and automaton services using serverless technologies. One of the requirements is massive scalability of the system with consistent performance. Like any web application, we needed to make a technical choice on the database at two levels, (a) sql or nosql (b) specific database based on the first-choice selection. &nbsp;This article is about sharing my thought process on the selection for the specific use case of ours. This article is based on AWS offerings as author is more familiar with AWS platform (and certified AWS solution architect).</p>
-        <p>This article has the following areas if you would like to jump back and forth instead of reading as one single item.</p>
-        <ul>
-        <li><a href="#_1._Use_Case">Use Case</a></li>
-        <li><a href="#_2._SQL_or">SQL or NoSQL</a></li>
-        <li><a href="#_3._NoSQL_Data">Data Model Design and Consequences</a></li>
-        <li><a href="#_4._Summary">Summary</a></li>
-        </ul>
-        <p>Note, Table and collection are used interchangeably to refer to table. Row and item is used interchangeably to refer to one row in the table.</p>
-        <h1>1. Use Case</h1>
-        <p>This use is about developing a base document platform which is scaffolding to develop further pay-per-use features.</p>
-        <p>The main use case requirements are as below.</p>
-        <ul>
-        <li>Documents are associated with a business entity.</li>
-        <li>Business entity can be anything depending on the domain.
-        <ul>
-        <li>Example, in case of accounting firms, person/company id is the business entity to which documents belongs to.</li>
-        <li>Example: In case of a legal firm, client id is the business entity where documented associated with given clients are organized.</li>
-        <li>Example: in case of loan origination, loan id is the business entity where related documents are attached.</li>
-        </ul>
-        </li>
-        <li>Each document has type associated with it.</li>
-        <li>Optionally, document type is associated with a group.</li>
-        <li>All remaining attributes of business entity or document or document type should be configurable per customer need.</li>
-        <li>Each business entity and document both have status which would drive the atomic business flows that depend on documents.</li>
-        </ul>
-        <p>Base platform above can be extended by automated workflows which are specific. Example on one such flow is extracting the data from documents and integrating back with customer systems. These flows come with built-in task management capabilities for queueing and picking up the task and monitoring the work queues. In summary, these extended flows may add more attributes the core entities or they may have separate items/tables defined which depend on core entities.</p>
-        <h1>2. SQL or NoSQL</h1>
-        <p>Main comparison criteria between SQL and NoSQL (here are few references &nbsp;<a href="https://www.youtube.com/watch?v=6yqfmXiZTlM">AWS re:invent 2019</a>&nbsp; &amp; <a href="2020:%20Part%201:%20https:/www.youtube.com/watch?v=MF9a1UNOAQo">AWS re:invent 2020 Part 1</a> &amp; <a href="https://www.youtube.com/watch?v=_KNrRdWD25M">Part 2</a> <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.WhyDynamoDB.html">. &nbsp;&nbsp;AWS link </a>&nbsp;<a href="https://blog.couchbase.com/comparison-sql-nosql-simplify-database-decision/">Another article</a> that describes more about NoSQL DynamoDB) are listed below for convenience reference. &nbsp;Table 1 below is taken directly from the references listed above.</p>
-        <p>Table 1: Why NoSQL?</p>
-        <table>
-        <tbody>
-        <tr>
-        <td colspan="2" width="601">
-        <p>Why NoSQL?</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="301">
-        <p>SQL</p>
-        </td>
-        <td width="301">
-        <p>NoSQL</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="301">
-        <p>Optimized for Storage</p>
-        </td>
-        <td width="301">
-        <p>Optimized for Compute</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="301">
-        <p>Normalized/Relational</p>
-        </td>
-        <td width="301">
-        <p>Denormalized/hierarchical</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="301">
-        <p>Ad Hoc Queries</p>
-        </td>
-        <td width="301">
-        <p>Instantiated Views</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="301">
-        <p>Scale Vertically</p>
-        </td>
-        <td width="301">
-        <p>Scale Horizontally</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="301">
-        <p>Good for OLAP</p>
-        </td>
-        <td width="301">
-        <p>Built for OLTP at scale</p>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        <p>&nbsp;</p>
-        <p>Coming back to the requirements, there are few key things that makes NoSQL better choice for the use case above.</p>
-        <ol>
-        <li>Dynamic Schema (or schemeless approach)</li>
-        </ol>
-        <p>Dynamic schema flexibility is important differentiating factor as per the use case. All we know from use case is that</p>
-        <ul>
-        <li>We have core entities which can be identified by unique keys either provided by customer or generated.</li>
-        <li>Relationship between core entities.</li>
-        <li>Rest of the attributes are configurable by the customer.</li>
-        <li>These attributes vary from customer to customer.</li>
-        </ul>
-        <p>&nbsp;</p>
-        <p>DynamoDB is schemeless. Every table must have a primary key to uniquely identify each data item, but there are no similar constraints on other non-key attributes</p>
-        <p>&nbsp;</p>
-        <p>The simple relational equivalent of the schema looks as below for the base document platform.</p>
-        <p>&nbsp;</p>
-  
-        <img src="dbchoice-schema.jpg" class="left-image" >
-        <ol>
-        <li>Scalability and Performance</li>
-        </ol>
-        <p>Other critical requirements is that database should provide consistent response time <strong><u>at any scale</u></strong> ( <a href="https://www.alexdebrie.com/posts/dynamodb-no-bad-queries/">Another good reference</a> on the scalability and performance).</p>
-        <p>This has been important design consideration for two reasons.</p>
-        <ol>
-        <li>Customer experience</li>
-        <li>Cost
-        <ol>
-        <li>As I mentioned earlier, plan is to go serverless full stack. Cost of serverless infra goes higher if the memory, compute and execution time are not under control. We are not sure yet we will be using lambda functions, but play with the lambda cost calculator changing the memory and execution time to see the impact.</li>
-        </ol>
-        </li>
-        </ol>
-        <p>&nbsp;</p>
-        <p>AWS DynamoDB provides single digit millisecond performance if the data is modelled properly within its boundaries and limits.</p>
-        <p>NoSQL scales horizontally due to the way it is architected. There are limits on how you use the system and this makes the system bounded for better performance. In NoSQL databases in general, data can be efficiently queried in limited number of ways, outside of which queries become slow and expensive.</p>
-        <p>Every major architectural decision has pros and cons and has some consequences on how you design and implement the rest of the system. The negative consequences of the decision are to be managed appropriately. Decision to go with NoSQL has the following consequences which I would elaborate in detail further.</p>
-        <ol>
-        <li>Clear understanding of the data access patterns and usage</li>
-        <li>No complex joins and queries.</li>
-        <li>Atomicity of the transactions.</li>
-        <li>Referential Integrity</li>
-        <li>Aggregations</li>
-        <li>Sorting</li>
-        <li>Pagination</li>
-        </ol>
-        <p>As far as which vendor to go with, given that we are using AWS as cloud platform and it serverless features, it would be easier to go with DynamoDB. MongoDB also offers managed services.</p>
-        <p>&nbsp;AWS offers DynamoDB with some very interesting capabilities (which otherwise requires resources with deep expertise) as below.</p>
-        <p>DynamoDB is fully managed, NoSQL database that provides fast and predictable performance with seamless capability. &nbsp;Few references to origins of DynamoDB (<a href="https://www.allthingsdistributed.com/2007/10/amazons_dynamo.html">Amazon's Dynamo whitepaper</a>)</p>
-        <ol>
-        <li>Supports semi-structured and unstructured data</li>
-        <li>Supports bot document and key-value data</li>
-        <li>It has flexible schema (sometimes referred as schema-less)</li>
-        <li>It uses HTTPS as transport</li>
-        <li><strong>Unlimited scaling without downtime or performance degradation</strong></li>
-        <li><strong>Provided single digit milliseconds latency at any scale</strong></li>
-        <li>It has multi-region and multi-master features.</li>
-        <li>It is durable database and has built-in backup and restore, in-memory caching and security features.</li>
-        </ol>
-        <p><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html">Click here</a> to view the DynamoDB developer guide which has detailed explanations. Let us dive deeper into each of the areas that are consequences of decision to go with NoSQL.</p>
-        <p>DynamoDB limits:</p>
-        <ol start="2">
-        <li>Max record size should be 400KB</li>
-        <li>Size limit on Query and Scan data</li>
-        <li>DynamoDB has two APIs for fetching a range of items in a single request. The&nbsp;<a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html">Query</a>operation will fetch a range of items that have the same partition key, whereas the&nbsp;<a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html">Scan</a>&nbsp;operation will fetch a range of items from your entire table.</li>
-        </ol>
-        <h1>3. NoSQL Data Model Design and other aspects</h1>
-        <p>Let us dive deeper into each of the areas that has impact on the rest of the system design and implementation.</p>
-        <table>
-        
-        <h2>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data access patterns</h2>
-        
-        <p>Let us take our relational schema presented in Fig 1 as the use case to model in DynamoDB using single table design approach. Here are references to few articles &nbsp;(<a href="https://www.alexdebrie.com/posts/dynamodb-single-table/">reference article 1</a>, <a href="https://www.trek10.com/blog/dynamodb-single-table-relational-modeling/">reference article 2</a>,&nbsp; ) that details about the table design in DynamoDB.</p>
-        <p>The below are the read access patterns for the use case above.</p>
-        <p>Table 2: Read Access Patterns</p>
-        <table>
-        <tbody>
-        <tr>
-        <td width="56">
-        <p>Sl. No</p>
-        </td>
-        <td width="545">
-        <p>Access Pattern</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="56">
-        <p>1</p>
-        </td>
-        <td width="545">
-        <p>Get all the group names</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="56">
-        <p>2</p>
-        </td>
-        <td width="545">
-        <p>Get all the document types</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="56">
-        <p>3</p>
-        </td>
-        <td width="545">
-        <p>Get a business entity by its ID</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="56">
-        <p>4</p>
-        </td>
-        <td width="545">
-        <p>Get a document by its ID</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="56">
-        <p>5</p>
-        </td>
-        <td width="545">
-        <p>Get all the document associated with a given business entity</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="56">
-        <p>6</p>
-        </td>
-        <td width="545">
-        <p>Get all the document associated with a given business entity by document status</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="56">
-        <p>7</p>
-        </td>
-        <td width="545">
-        <p>Get all the document associated with a given business entity by document type name</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="56">
-        <p>8</p>
-        </td>
-        <td width="545">
-        <p>Get all the document associated with a given business entity by group name</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="56">
-        <p>9</p>
-        </td>
-        <td width="545">
-        <p>Get all business entities</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="56">
-        <p>10</p>
-        </td>
-        <td width="545">
-        <p>Get all documents (across business entities) for a given document status</p>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        <p>&nbsp;</p>
-        <p>Table 3: Entities and their PK (Partition key), SK (Sort Key)</p>
-        <table style="border-color: black;">
-        <tbody>
-        <tr style="height: 34.7709px;">
-        <td style="height: 34.7709px;" width="150">
-        <p>Entity</p>
-        </td>
-        <td style="height: 34.7709px;" width="150">
-        <p>PK</p>
-        </td>
-        <td style="height: 34.7709px;" width="150">
-        <p>SK</p>
-        </td>
-        <td style="height: 34.7709px;" width="150">
-        <p>Reamarks</p>
-        </td>
-        </tr>
-        <tr style="height: 34px;">
-        <td style="height: 34px;" width="150">
-        <p>Group</p>
-        </td>
-        <td style="height: 34px;" width="150">
-        <p>&ldquo;groups&rdquo;</p>
-        </td>
-        <td style="height: 34px;" width="150">
-        <p>Group Name</p>
-        </td>
-        <td style="height: 34px;" width="150">
-        <p>&nbsp;</p>
-        </td>
-        </tr>
-        <tr style="height: 34px;">
-        <td style="height: 34px;" width="150">
-        <p>DocumentType</p>
-        </td>
-        <td style="height: 34px;" width="150">
-        <p>&ldquo;doctypes&rdquo;</p>
-        </td>
-        <td style="height: 34px;" width="150">
-        <p>Doc Type Name</p>
-        </td>
-        <td style="height: 34px;" width="150">
-        <p>&nbsp;</p>
-        </td>
-        </tr>
-        <tr style="height: 34px;">
-        <td style="height: 34px;" width="150">
-        <p>Business Entity</p>
-        </td>
-        <td style="height: 34px;" width="150">
-        <p>Business Entity Id</p>
-        </td>
-        <td style="height: 34px;" width="150">
-        <p>&ldquo;entity&rdquo;</p>
-        </td>
-        <td style="height: 34px;" width="150">
-        <p>&nbsp;</p>
-        </td>
-        </tr>
-        <tr style="height: 48px;">
-        <td style="height: 48px;" width="150">
-        <p>Document</p>
-        </td>
-        <td style="height: 48px;" width="150">
-        <p>Business Entity Id</p>
-        </td>
-        <td style="height: 48px;" width="150">
-        <p>Doc#&lt;document id&gt;:lm#&lt;date&gt;:status#&lt;status&gt;</p>
-        </td>
-        <td style="height: 48px;" width="150">
-        <p>&nbsp;</p>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        <p>&nbsp;</p>
-        <p>Note, intentionally, I am using keyword &ldquo;groups&rdquo; as PK for both Group and &ldquo;doctypes&rdquo; keyword for DocumentType items. These are lookup tables and expected to have anywhere from single digit rows to couple of hundred rows at the max.&nbsp; I would like DynamoDB to keep these in one partition/shard than spreading across multiple shards/partitions.</p>
-        <p>Fig 2: Single Table Design for the schema represented in Fig 1</p>
-        <img src="dynamo-table-design.jpg" class="left-image" >
-        <p>The above single table design looks weird compared to the relational schema. But under the hood you are saving data in a format that would be faster for fetching real-time. Taking directly from the <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-general-nosql-design.html">&ldquo;DynamoDB Developer Guide&rdquo;</a> link</p>
-        <p>&ldquo;<strong>Data shape</strong>: Instead of reshaping data when a query is processed (as an RDBMS system does), a NoSQL database organizes data so that its shape in the database corresponds with what will be queried. This is a key factor in increasing speed and scalability.&rdquo;</p>
-        <p>NoSQL design requires a different mindset than RDBMS design. Please refer &ldquo;<a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-general-nosql-design.html">DynamoDB Developer Guide</a>&rdquo; for more details on NoSQL design. It helps a lot to have high level understanding (partitioning, LSI, GSI, index overloading, Adjacent List Patterns) of how the DynamoDB engine works also helps.</p>
-        <p>Note, in the use case used, business entity Id is unique and is entered/managed by customer. Document id is generated and must be unique.</p>
-        <p>Well, is the single-table design is only option we have in NoSQL modelling? There is one another alternative than single table design that is having separate tables and use graphql. &nbsp;But irrespective of single table or multi-table, you must design these based on the access patterns.</p>
-        <p>One reason I did not consider using graphql approach is that (a) use case requires to have flexible schema (custom attributes) where customer configures the attributes and uses. It is not clear to me how to go about doing this in graphql when your attributes are not defined ahead. (b)&nbsp; I might have to add additional secondary indexes based on the custom configuration of the attributes/usage based on customer needs.</p>
-        <p>Table 5: Query Conditions for the access patterns from Table 2.</p>
-        <table>
-        <tbody>
-        <tr>
-        <td width="43">
-        <p>Sl. No</p>
-        </td>
-        <td width="297">
-        <p>Access Pattern</p>
-        </td>
-        <td width="261">
-        <p>Query Conditions</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>1</p>
-        </td>
-        <td width="297">
-        <p>Get all the group names</p>
-        </td>
-        <td width="261">
-        <p>Use PK = &ldquo;groups&rdquo;</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>2</p>
-        </td>
-        <td width="297">
-        <p>Get all the document types</p>
-        </td>
-        <td width="261">
-        <p>Use PK = &ldquo;doctypes&rdquo;</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>3</p>
-        </td>
-        <td width="297">
-        <p>Get a business entity by its ID</p>
-        </td>
-        <td width="261">
-        <p>Use PK = &lt;entity ID&gt; and sk = &ldquo;entity&rdquo;</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>4</p>
-        </td>
-        <td width="297">
-        <p>Get a document by its ID and business entity</p>
-        </td>
-        <td width="261">
-        <p>Use PK = &lt;entity ID&gt; and SK = begins_with(doc#document id)</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>5</p>
-        </td>
-        <td width="297">
-        <p>Get all the document associated with a given business entity</p>
-        </td>
-        <td width="261">
-        <p>Use PK = &lt;entity ID&gt;</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>6</p>
-        </td>
-        <td width="297">
-        <p>Get all the document associated with a given business entity by document status</p>
-        </td>
-        <td width="261">
-        <p>Use PK = &lt;entity ID&gt; and SK = contains(status:&lt;status&gt;)</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>7</p>
-        </td>
-        <td width="297">
-        <p>Get all the document associated with a given business entity by document type name</p>
-        </td>
-        <td width="261">
-        <p>Use PK = &lt;entity ID&gt; and SK = contains(documenttype:&lt;type&gt;)</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>8</p>
-        </td>
-        <td width="297">
-        <p>Get all the document associated with a given business entity by group name</p>
-        </td>
-        <td width="261">
-        <p>Use PK = &lt;entity ID&gt; and SK = contains(group:&lt;group name&gt;)</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>9</p>
-        </td>
-        <td width="297">
-        <p>Get all business entities</p>
-        </td>
-        <td width="261">
-        <p>Use GS1 SK = &ldquo;entity&rdquo;</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>10</p>
-        </td>
-        <td width="297">
-        <p>Get all documents (across business entities) for a given document status</p>
-        </td>
-        <td width="261">
-        <p>Use GS1 PK = contains(&ldquo;status#&lt;status&gt;&rdquo;)</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>11</p>
-        </td>
-        <td width="297">
-        <p>Get all documents (across business entities) for given Document type name</p>
-        </td>
-        <td width="261">
-        <p>Not used access pattern</p>
-        </td>
-        </tr>
-        <tr>
-        <td width="43">
-        <p>12</p>
-        </td>
-        <td width="297">
-        <p>Get all documents (across business entities) for given group name</p>
-        </td>
-        <td width="261">
-        <p>Not used access pattern</p>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        <p>&nbsp;</p>
-        <p>One need to understand how the global secondary indexes and local secondary indexes work. If you query or scan a global secondary index, you can only request attributes that are projected into the index. Global secondary index queries cannot fetch attributes from the parent table.</p>
-        
-        <h2>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Complex joins or queries</h2>
-        
-        <p>Joins and complex queries are not supported. We have modelled 1:N and 1:1 relation in the single table above. &nbsp;If you need reports and other analytics which require joins, it would have to be managed separately.</p>
-        
-        <h2>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Transactions</h2>
-        
-        <p>Recently (<a href="https://aws.amazon.com/blogs/aws/new-amazon-dynamodb-transactions/">click here for blog</a>), AWS has enhanced DynamoDB with native support for transactions. Few references to DynamoDB transactions are listed for convenience (<a href="https://www.alexdebrie.com/posts/dynamodb-transactions/">reference 1</a>, <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/transactions.html">reference 2</a>).</p>
-        <p>In our use case, this is remediated as there is only single table and atomicity is provided already. If required to update multiple rows separately, transactions can be used. This is good and needed enhancement.</p>
-        
-        <h2>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Referential Integrity</h2>
-        
-        <p>Referential integrity is not supported by NoSQL databases. This has to be managed by application code.&nbsp; Of Course, looking at the table design, it has to be built into the application logic such that data is inserted correctly.</p>
-        <p>&nbsp;</p>
-        <p>Group name from table groups is referenced in DocumentTypes. But this has to be validated at the application-level code as part of the business logic. DynamoDB is not going to be enforce it for you.</p>
-        <p>&nbsp;</p>
-        <p>Similarly, documentType and Group name added to the document are to be validated at the application-level code as part of the business logic. Same with when a document is added to the business entity.</p>
-        <table>
-        
-        <h2>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Aggregations</h2>
-        
-        <p>Aggregations like sum, min, max are not supported by DynamoDB. There are some counts (childCount in BusinessEntity table) we would be updating as part of the application code when the items are added/deleted.</p>
-        <p>&nbsp;</p>
-        <p>If you need any other aggregations to be derived on the fly it is not supported. All of these to have managed separately using &ldquo;do it once and read many times&rdquo; approach. There are several approaches to mange this. One approach is to use DynamoDB streams, sum/aggregate using Lambda function and insert into a summary table.</p>
-        <h2>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sorting</h2>
-        <p>Sorting is restricted in DynamoDB. Items with the same partition key value are stored in sorted order by sort key.</p>
-        <p>If&nbsp;ScanIndexForward&nbsp;is&nbsp;true, DynamoDB returns the results in the order in which they are stored (by sort key value). This is the default behavior. If&nbsp;ScanIndexForward&nbsp;is&nbsp;false, DynamoDB reads the results in reverse order by sort key value, and then returns the results to the client.</p>
-        <p>You need to be cognizant of this so that if you have grid or similar widget, you cannot sort by multiple grid columns or any column of your choice. You might want to look at your ui flow/design such that you can provide local filters and/or global filters or provide some kind of search and view details approaches.</p>
-        <p>One need to re-look at their requirements as providing unlimited data on the ui screen. Just not efficient neither to the user or to the backend that is fetching these.</p>
-        <h2>7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Paginations</h2>
-        <p>DynamoDB query/scan does not fetch all the items. These are paginated. This is a good feature where pagination is provided by default.</p>
-        <h1>4. Summary</h1>
-        <p>NoSQL databases are architected for horizontal scalability. There are limits on how you use the system and this makes the system bounded for better performance. These limits guide you to plan your application access patterns and design your data model, upfront, so that your database provides predictable performance at any scale. Instead of reshaping data when a query is processed (as an RDBMS system does), a NoSQL database organizes data so that its shape in the database corresponds with what will be queried. This is a key factor in increasing speed and scalability.</p>
-        <p>NoSQL design requires a different mindset than RDBMS design and has learning curve.&nbsp; Several things that you take for granted in RDMS world (like referential data integrity, aggregations) become application concerns to be managed. DynamoDB streams certainly provides cleaner and easier approach to manage these concerns at the application level but requires additional effort. DynamoDB avoids any piece of functionality (compared to RDBMS, in traditional RDBMS these are joins, aggregations, referential integrity, sorting on any column) that impacts speed and scalability.</p>
-        <p>Sorting is limited to sort keys (primary or indexes). Pagination is provided as part of the query/scan operations which is nice feature.</p>
-        <p>AWS documentation need to improve to explain the under the hood details so that developer can design with better understanding. AWS documentation is not clear on how it manages the global secondary indexes. All it says is &ldquo;&rdquo;.&nbsp; If you project all , then entire table goes to index data (assuming your data does not cause sparse indexes).</p>
-        <p>&nbsp;</p>
-        <p>&nbsp;&nbsp;</p>
-    <hr>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><A NAME="_top"></A>Recently,
+		I started working on developing a base platform for document-based
+		workflow and automaton services using serverless technologies. One of
+		the requirements is massive scalability of the system with consistent
+		performance. Like any web application, we needed to make a technical
+		choice on the database at two levels, (a) sql or nosql (b) specific
+		database based on the first-choice selection.  This article is about
+		sharing my thought process on the selection for the specific use case
+		of ours. This article is based on AWS offerings as author is more
+		familiar with AWS platform (and certified AWS solution architect).</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">This article has the
+		following areas if you would like to jump back and forth instead of
+		reading as one single item.</P>
+		<UL>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><A HREF="#_1._Use_Case">Use
+			Case</A></P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><A HREF="#_2._SQL_or">SQL
+			or NoSQL </A>
+			</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><A HREF="#_3._Amazon_DynamoDB">Amazon
+			DynamoDB</A></P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><A HREF="#_3._NoSQL_Data">Data
+			Model Design and Consequences</A></P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><A HREF="#_4._Summary">Summary</A></P>
+		</UL>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Note, Table and
+		collection are used interchangeably to refer to table. Row and item
+		is used interchangeably to refer to one row in the table.</P>
+		<H1 CLASS="western"><A NAME="_1._Use_Case"></A>1. Use Case</H1>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">This usecase is about
+		developing a base document platform which is scaffolding to develop
+		further pay-per-use features. 
+		</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">The main use case
+		requirements are as below.</P>
+		<UL>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Documents are
+			associated with a business entity.</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Business entity
+			can be anything depending on the domain. 
+			</P>
+			<UL>
+				<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Example, in case
+				of accounting firms, person/company id is the business entity to
+				which documents belongs to.</P>
+				<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Example: In case
+				of a legal firm, client id is the business entity where documented
+				associated with given clients are organized.</P>
+				<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Example: in case
+				of loan origination, loan id is the business entity where related
+				documents are attached.</P>
+			</UL>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Each document has
+			type associated with it.</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Optionally,
+			document type is associated with a group.</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">All remaining
+			attributes of business entity or document or document type should be
+			configurable per customer need.</P>
+			<LI><P STYLE="margin-bottom: 0.11in">Each business entity and
+			document both have status which would drive the atomic business
+			flows that depend on documents.</P>
+		</UL>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Base platform above
+		can be extended by automated workflows which are specific. Example on
+		one such flow is extracting the data from documents and integrating
+		back with customer systems. These flows come with built-in task
+		management capabilities for queueing and picking up the task and
+		monitoring the work queues. In summary, these extended flows may add
+		more attributes the core entities or they may have separate
+		items/tables defined which depend on core entities. 
+		</P>
+		<H1 CLASS="western"><A NAME="_2._SQL_or"></A>2. SQL or NoSQL</H1>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Main comparison
+		criteria between SQL and NoSQL [Here are few references  (a). <A HREF="https://www.youtube.com/watch?v=6yqfmXiZTlM">AWS
+		re:invent 2019</A>  &amp;(b). <A HREF="2020:%20Part%201:%20https:/www.youtube.com/watch?v=MF9a1UNOAQo">AWS
+		re:invent 2020 Part 1</A> &amp; <A HREF="https://www.youtube.com/watch?v=_KNrRdWD25M">Part
+		2</A> (c). <A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.WhyDynamoDB.html">.
+		  AWS DynamoDB Developer Guide </A> (d). <A HREF="https://blog.couchbase.com/comparison-sql-nosql-simplify-database-decision/">Another
+		article</A> that describes more about NoSQL DynamoDB] are listed
+		below for convenience reference.  Table 1 below is taken directly
+		from the references listed above. 
+		</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Table 1: Why NoSQL? 
+		</P>
+		<TABLE WIDTH=601 CELLPADDING=7 CELLSPACING=0>
+			<COL WIDTH=286>
+			<COL WIDTH=286>
+			<TR>
+				<TD COLSPAN=2 WIDTH=585 VALIGN=TOP STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Why NoSQL?</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=286 BGCOLOR="#d0cece" STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=CENTER>SQL</P>
+				</TD>
+				<TD WIDTH=286 BGCOLOR="#d0cece" STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=CENTER>NoSQL</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=286 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Optimized for Storage</P>
+				</TD>
+				<TD WIDTH=286 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Optimized for Compute</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=286 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Normalized/Relational</P>
+				</TD>
+				<TD WIDTH=286 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Denormalized/hierarchical</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=286 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Ad Hoc Queries</P>
+				</TD>
+				<TD WIDTH=286 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Instantiated Views</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=286 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Scale Vertically</P>
+				</TD>
+				<TD WIDTH=286 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Scale Horizontally</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=286 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Good for OLAP</P>
+				</TD>
+				<TD WIDTH=286 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Built for OLTP at scale</P>
+				</TD>
+			</TR>
+		</TABLE>
+		<!-- <P STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<P STYLE="margin-bottom: 0.11in">Coming back to the requirements,
+		there are few key things that makes NoSQL better choice for the use
+		case above.</P>
+		<b>
+		<OL TYPE=A >
+			<LI><P STYLE="margin-bottom: 0.11in">Dynamic Schema (or schemeless
+			approach)</P>
+		</OL>
+		</b>
+		<P STYLE="margin-bottom: 0.11in">Dynamic schema flexibility is
+		important differentiating factor as per the use case. All we know
+		from use case is that 
+		</P>
+		<UL>
+			<LI><P STYLE="margin-bottom: 0.11in">We have core entities which can
+			be identified by unique keys either provided by customer or
+			generated.</P>
+			<LI><P STYLE="margin-bottom: 0.11in">Relationship between core
+			entities.</P>
+			<LI><P STYLE="margin-bottom: 0.11in">Rest of the attributes are
+			configurable by the customer. 
+			</P>
+			<LI><P STYLE="margin-bottom: 0.11in">These attributes vary from
+			customer to customer.</P>
+		</UL>
+		<!-- <P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">DynamoDB
+		tables are schemaless, except for the primary key, so the items in a
+		table can all have different attributes, sizes, and data types.</SPAN></FONT>
+		The simple relational equivalent of the schema looks as below for the
+		base document platform. 
+		</P>
+		<!-- <P ALIGN=JUSTIFY STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><BR><BR>
+		</P>
+		-->
+		<P ALIGN=JUSTIFY STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><BR><BR>
+		</P>
+		<P ALIGN=JUSTIFY STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><IMG SRC="databasechoiceschema.png" NAME="Picture 1" ALIGN=BOTTOM WIDTH=616 HEIGHT=244 BORDER=0></P>
+		<!-- <P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<b>
+		<OL TYPE=A START=2>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Scalability and
+			Performance</P>
+		</OL>
+		</b>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Other critical
+		requirements is that database should provide consistent response time
+		<U><B>at any scale</B></U> ( One <A HREF="https://www.alexdebrie.com/posts/dynamodb-no-bad-queries/">good
+		reference</A> on the scalability and performance).</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">This has been
+		important design consideration for two reasons.</P>
+		<OL>
+			<OL TYPE=a>
+				<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Customer
+				experience</P>
+				<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Cost (As
+				mentioned earlier, our plan is to go serverless full stack. Cost of
+				serverless infra goes higher if the memory, compute and execution
+				time are not under control).</P>
+			</OL>
+		</OL>
+		<!-- <P ALIGN=JUSTIFY STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">AWS DynamoDB provides
+		single digit millisecond performance if the data is modelled properly
+		within its boundaries and limits. 
+		</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Every major
+		architectural decision has pros and cons and has some consequences on
+		how you design and implement the rest of the system. Decision to go
+		with NoSQL has the following consequences which I would elaborate in
+		detail further.</P>
+		<OL>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">NoSQL Design
+			Approach 
+			</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">No complex joins
+			and queries. 
+			</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Atomicity of the
+			transactions. 
+			</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Referential
+			Integrity</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Aggregations</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Sorting</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Pagination</P>
+		</OL>
+		<H1 CLASS="western"><A NAME="_3._Amazon_DynamoDB"></A>3. Amazon
+		DynamoDB</H1>
+		<P STYLE="margin-bottom: 0.11in">As far as which vendor to go with,
+		given that we are using AWS as cloud platform and it serverless
+		features, it would be easier to go with DynamoDB. MongoDB also offers
+		managed services.</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"> AWS offers DynamoDB
+		with some very interesting capabilities (which otherwise requires
+		resources with deep expertise) as below.</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">DynamoDB is fully
+		managed, NoSQL database that provides fast and predictable
+		performance with seamless capability.  Here is (<A HREF="https://www.allthingsdistributed.com/2007/10/amazons_dynamo.html">Amazon's
+		Dynamo whitepaper</A>) one good reference to the origins of
+		DynamoDB</P>
+		<OL>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Supports
+			semi-structured and unstructured data</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Supports both
+			document and key-value data</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">It has flexible
+			schema (sometimes referred as schema-less)</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">It uses HTTPS as
+			transport</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><B>Unlimited
+			scaling without downtime or performance degradation</B></P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><B>Provided
+			single digit milliseconds latency at any scale</B></P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">It has
+			multi-region and multi-master features.</P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">It is durable
+			database and has built-in backup and restore, in-memory caching and
+			security features.</P>
+		</OL>
+		<P STYLE="margin-bottom: 0.11in"><A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html">Click
+		here</A> to view the DynamoDB developer guide which has detailed
+		explanations. Let us dive deeper into each of the areas that are
+		consequences of decision to go with NoSQL.</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">The following are the
+		DynamoDB limits, as of Apr-2021</P>
+		<OL START=1>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#222222">An
+			individual record in DynamoDB is called an item, and a single
+			DynamoDB item cannot exceed 400KB.</FONT></P>
+			<LI><P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#222222">Page
+			Size limit 1 MB on Query and Scan data </FONT>
+			</P>
+			<OL TYPE=a>
+				<LI><P ALIGN=JUSTIFY STYLE="margin-top: 0.19in; margin-bottom: 0.19in; line-height: 100%">
+				<FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#222222"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">DynamoDB
+				has two APIs for fetching a range of items in a single request.
+				The&nbsp;</FONT></FONT></FONT><A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html"><FONT COLOR="#5d93ff"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Query</FONT></FONT></FONT></A><FONT COLOR="#222222"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">&nbsp;operation
+				will fetch a range of items that have the same partition key,
+				whereas the&nbsp;</FONT></FONT></FONT><A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html"><FONT COLOR="#5d93ff"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Scan</FONT></FONT></FONT></A><FONT COLOR="#222222"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">&nbsp;operation
+				will fetch a range of items from your entire table.</FONT></FONT></FONT></FONT></FONT></P>
+				<LI><P ALIGN=JUSTIFY STYLE="margin-top: 0.19in; margin-bottom: 0.19in; line-height: 100%">
+				<FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#222222"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">For
+				both of these operations, there is a 1MB limit on the size of an
+				individual request. If your Query parameters match more than 1MB of
+				data or if you issue a Scan operation on a table that’s larger
+				than 1MB, your request will return the initial matching items plus
+				a&nbsp;</FONT></FONT></FONT><FONT FACE="Courier New, serif"><FONT SIZE=2><FONT COLOR="#000000"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt"><SPAN STYLE="background: #f5f2f0">LastEvaluatedKey</SPAN></FONT></FONT></FONT></FONT></FONT><FONT COLOR="#222222"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">&nbsp;property
+				that can be used in the next request to read the next page.</FONT></FONT></FONT></FONT></FONT></P>
+			</OL>
+			<LI><P STYLE="margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">DynamoDB
+			supports your access patterns using the throughput that you
+			provisioned as long as the traffic against a given partition does
+			not exceed 3,000 RCUs or 1,000 WCUs.</SPAN></FONT></P>
+		</OL>
+		<H1 CLASS="western"><A NAME="_3._NoSQL_Data"></A>4. NoSQL Data Model
+		Design and other aspects</H1>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Let us dive deeper
+		into each (of the areas identified as consequences of decision to go
+		with DynamodB above) that has impact on the rest of the
+		application/product design and implementation.</P>
+		<P STYLE="margin-bottom: 0.11in"><SPAN ID="Frame1" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
+			<b>
+			<OL>
+				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Design
+				approach</b></H2>
+			</OL>
+			</b>
+		<FONT COLOR="#16191f">Please refer to the </FONT><A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-general-nosql-design.html#bp-general-nosql-design-concepts">link</A><FONT COLOR="#16191f">
+		from Dyanmo DB Developer Guide for more details. </FONT>There are two
+		key concepts in NoSQL Design.
+		</P>
+		<P STYLE="margin-bottom: 0.11in"><EM><FONT COLOR="#16191f"><FONT FACE="Arial, serif"><SPAN STYLE="background: #ffffff">Concept
+		1: The first step in designing your DynamoDB application is to
+		identify the specific query patterns that the system must satisfy.</SPAN></FONT></FONT></EM></P>
+		<P STYLE="margin-top: 0.19in; margin-bottom: 0.19in; background: #ffffff; line-height: 0.25in">
+		<FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Identify
+		the application access patterns and it properties as below</FONT></FONT></FONT></FONT></FONT></P>
+		<UL>
+			<LI><P STYLE="margin-top: 0.19in; margin-bottom: 0.19in; background: #ffffff; line-height: 0.25in">
+			<FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt"><B>Data
+			size</B></FONT></FONT></FONT><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">:
+			Knowing how much data will be stored and requested at one time will
+			help determine the most effective way to partition the data.</FONT></FONT></FONT></FONT></FONT></P>
+			<LI><P STYLE="margin-top: 0.19in; margin-bottom: 0.19in; background: #ffffff; line-height: 0.25in">
+			<FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt"><B>Data
+			shape</B></FONT></FONT></FONT><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">:
+			Instead of reshaping data when a query is processed (as an RDBMS
+			system does), a NoSQL database organizes data so that its shape in
+			the database corresponds with what will be queried. This is a key
+			factor in increasing speed and scalability.</FONT></FONT></FONT></FONT></FONT></P>
+			<LI><P STYLE="margin-top: 0.19in; margin-bottom: 0.19in; background: #ffffff; line-height: 0.25in">
+			<FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt"><B>Data
+			velocity</B></FONT></FONT></FONT><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">:
+			DynamoDB scales by increasing the number of physical partitions that
+			are available to process queries, and by efficiently distributing
+			data across those partitions. Knowing in advance what the peak query
+			loads will be might help determine how to partition data to best use
+			I/O capacity.</FONT></FONT></FONT></FONT></FONT></P>
+		</UL>
+		<!-- <P STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<P STYLE="margin-bottom: 0.11in">Concept 2:  Organize your data
+		according to general principles that govern performance</P>
+		<OL TYPE=a>
+			<LI><P STYLE="margin-bottom: 0.11in">Keep related data together:</P>
+		</OL>
+		<P STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">Instead
+		of distributing related data items across multiple tables, you should
+		keep related items in your NoSQL system as close together as
+		possible. As a general rule, you should maintain as few tables as
+		possible in a DynamoDB application.</SPAN></FONT></P>
+		<!-- <P STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><BR><BR>  -->
+		</P>
+		<OL TYPE=a START=2>
+			<LI><P STYLE="margin-bottom: 0.11in">Use Sort order</P>
+		</OL>
+		<P STYLE="margin-left: 0.5in; margin-top: 0.19in; margin-bottom: 0.19in; background: #ffffff; line-height: 0.25in">
+		<FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt">Related
+		items can be grouped together and queried efficiently if their key
+		design causes them to sort together. This is an important NoSQL
+		design strategy.</FONT></FONT></FONT></FONT></FONT></P>
+		<!-- <P STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><BR><BR> 
+		</P> -->
+		<OL TYPE=a START=3>
+			<LI><P STYLE="margin-bottom: 0.11in">Distribute queries</P>
+		</OL>
+		<P STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">you
+		should design data keys to distribute traffic evenly across
+		partitions as much as possible, avoiding &quot;hot spots.&quot;</SPAN></FONT></P>
+		<!-- <P STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><BR><BR> 
+		</P> -->
+		<OL TYPE=a START=4>
+			<LI><P STYLE="margin-bottom: 0.11in">Use global secondary indexes</P>
+		</OL>
+		<P STYLE="margin-left: 0.5in; margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">By
+		creating specific global secondary indexes, you can enable different
+		queries than your main table can support, and that are still fast and
+		relatively inexpensive</SPAN></FONT><FONT COLOR="#16191f"><FONT FACE="Arial, serif"><SPAN STYLE="background: #ffffff">.</SPAN></FONT></FONT></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><SPAN ID="Frame2" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
+			<b><OL START=2>
+				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Data
+				access patterns </b> </H2> </LI>
+				</H2>
+			</OL></b>
+		<!-- </SPAN><BR CLEAR=LEFT> --> Let us take our relational schema presented in
+		Fig. 1 as the use case to model in DynamoDB using single table design
+		approach. Here are references to few articles  (<A HREF="https://www.alexdebrie.com/posts/dynamodb-single-table/">reference
+		article 1</A>, <A HREF="https://www.trek10.com/blog/dynamodb-single-table-relational-modeling/">reference
+		article 2</A>,  ) that details about the table design in DynamoDB.
+		</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">The below are the read
+		access patterns for the use case above.</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Table 2: Read Access
+		Patterns</P>
+		<TABLE WIDTH=601 CELLPADDING=7 CELLSPACING=0>
+			<COL WIDTH=41>
+			<COL WIDTH=530>
+			<TR VALIGN=TOP>
+				<TD WIDTH=41 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Sl. No</P>
+				</TD>
+				<TD WIDTH=530 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Access Pattern</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=41 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>1</P>
+				</TD>
+				<TD WIDTH=530 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the group names 
+					</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=41 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>2</P>
+				</TD>
+				<TD WIDTH=530 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the document types</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=41 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>3</P>
+				</TD>
+				<TD WIDTH=530 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get a business entity by its ID</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=41 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>4</P>
+				</TD>
+				<TD WIDTH=530 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get a document by its ID</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=41 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>5</P>
+				</TD>
+				<TD WIDTH=530 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the document associated with a given
+					business entity</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=41 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>6</P>
+				</TD>
+				<TD WIDTH=530 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the document associated with a given
+					business entity by document status</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=41 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>7</P>
+				</TD>
+				<TD WIDTH=530 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the document associated with a given
+					business entity by document type name</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=41 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>8</P>
+				</TD>
+				<TD WIDTH=530 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the document associated with a given
+					business entity by group name</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=41 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>9</P>
+				</TD>
+				<TD WIDTH=530 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all business entities</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=41 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>10</P>
+				</TD>
+				<TD WIDTH=530 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all documents (across business entities) for
+					a given document status</P>
+				</TD>
+			</TR>
+		</TABLE>
+		<!-- <P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">The
+		primary key that uniquely identifies each item in an Amazon DynamoDB
+		table can be a simple (a partition key only) or composite (a
+		partition key combined with a sort key).  For more details on how to
+		design partition key, </SPAN></FONT><A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html"><SPAN STYLE="background: #ffffff">refer
+		to developer guide</SPAN></A><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">.
+		The following table describes the keys for our table for different
+		data shapes.</SPAN></FONT></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Table 3: Entities and
+		their PK (Partition key), SK (Sort Key) 
+		</P>
+		<TABLE WIDTH=601 CELLPADDING=7 CELLSPACING=0>
+			<COL WIDTH=124>
+			<COL WIDTH=119>
+			<COL WIDTH=185>
+			<COL WIDTH=116>
+			<TR VALIGN=TOP>
+				<TD WIDTH=124 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Entity</P>
+				</TD>
+				<TD WIDTH=119 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>PK</P>
+				</TD>
+				<TD WIDTH=185 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>SK</P>
+				</TD>
+				<TD WIDTH=116 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Reamarks</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=124 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Group</P>
+				</TD>
+				<TD WIDTH=119 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>“groups”</P>
+				</TD>
+				<TD WIDTH=185 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Group Name</P>
+				</TD>
+				<TD WIDTH=116 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY><BR>
+					</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=124 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>DocumentType</P>
+				</TD>
+				<TD WIDTH=119 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>“doctypes”</P>
+				</TD>
+				<TD WIDTH=185 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Doc Type Name</P>
+				</TD>
+				<TD WIDTH=116 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY><BR>
+					</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=124 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Business Entity</P>
+				</TD>
+				<TD WIDTH=119 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Business Entity Id</P>
+				</TD>
+				<TD WIDTH=185 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>“entity”</P>
+				</TD>
+				<TD WIDTH=116 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY><BR>
+					</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=124 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Document</P>
+				</TD>
+				<TD WIDTH=119 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Business Entity Id</P>
+				</TD>
+				<TD WIDTH=185 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Doc#&lt;document id&gt;:lm#&lt;date&gt;:status#&lt;status&gt;</P>
+				</TD>
+				<TD WIDTH=116 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY><BR>
+					</P>
+				</TD>
+			</TR>
+		</TABLE>
+		<!-- <P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Note, intentionally, I
+		am using keyword “groups” as PK for both Group and “doctypes”
+		keyword for DocumentType items. These are lookup tables and expected
+		to have anywhere from single digit rows to couple of hundred rows at
+		the max.  I would like DynamoDB to keep these in one partition/shard
+		than spreading across multiple shards/partitions.</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">In
+		our use case, business entity Id is unique and is entered/managed by
+		customer. Document id is generated something like uuid. </SPAN></FONT>
+		</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">This
+		key design fits well as it keeps the business entity and its related
+		documents together in one partition. We do not expect the business
+		entity and its documents exceed the 10 GB partition size. If there
+		are more business entity’s are added based on customer volume,
+		DynamoDB should be able to increase the partitions appropriately.</SPAN></FONT></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">Well,
+		our product feature is for customers to add attributes to the core
+		entities, application must need to make sure that this configuration
+		does not cross the another DynamoDB limit that item (row in a table)
+		does not exceed 400 KB size limit.</SPAN></FONT></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Fig 2: Single Table
+		Design for the schema represented in Fig 1</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><IMG SRC="databasechoicedatamodel.png" NAME="Picture 2" ALIGN=BOTTOM WIDTH=683 HEIGHT=156 BORDER=0></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">The above single table
+		design looks weird compared to the relational schema. But under the
+		hood you are saving data in a format that would be faster for
+		fetching real-time. Taking directly from the <A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-general-nosql-design.html">“<SPAN STYLE="background: #ffffff">DynamoDB
+		Developer Guide”</SPAN></A><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">
+		link</SPAN></FONT></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">“<FONT COLOR="#16191f"><I><B><SPAN STYLE="background: #ffffff">Data
+		shape</SPAN></B></I></FONT><FONT COLOR="#16191f"><I><SPAN STYLE="background: #ffffff">:
+		Instead of reshaping data when a query is processed (as an RDBMS
+		system does), a NoSQL database organizes data so that its shape in
+		the database corresponds with what will be queried. This is a key
+		factor in increasing speed and scalability.”</SPAN></I></FONT></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">Well,
+		is the single-table design is only option we have in NoSQL modelling?
+		There is one another alternative than single table design that is
+		having separate tables and use graphql which gets the data for you
+		from multiple tables based on the graphql schema.  But irrespective
+		of single table or multi-table, you must design these based on the
+		access patterns. </SPAN></FONT>
+		</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">I
+		did not consider using graphql approach is that (a) use case requires
+		to have flexible schema (custom attributes) where customer configures
+		the attributes and uses. It is not clear to me how to go about doing
+		this in graphql when your attributes are not defined ahead. (b)  I
+		might have to add additional secondary indexes based on the custom
+		configuration of the attributes/usage based on customer needs.</SPAN></FONT></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Table 5: Query
+		Conditions for the access patterns from Table 2.</P>
+		<TABLE WIDTH=601 CELLPADDING=7 CELLSPACING=0>
+			<COL WIDTH=28>
+			<COL WIDTH=283>
+			<COL WIDTH=246>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Sl. No</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Access Pattern</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Query Conditions</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>1</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the group names 
+					</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Use PK = “groups”</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>2</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the document types</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Use PK = “doctypes”</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>3</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get a business entity by its ID</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Use PK = &lt;entity ID&gt; and sk = “entity”</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>4</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get a document by its ID and business entity</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Use PK = &lt;entity ID&gt; and SK =
+					begins_with(doc#document id)</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>5</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the document associated with a given
+					business entity</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Use PK = &lt;entity ID&gt;</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>6</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the document associated with a given
+					business entity by document status</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Use PK = &lt;entity ID&gt; and SK =
+					contains(status:&lt;status&gt;)</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>7</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the document associated with a given
+					business entity by document type name</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Use PK = &lt;entity ID&gt; and SK =
+					contains(documenttype:&lt;type&gt;)</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>8</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all the document associated with a given
+					business entity by group name</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Use PK = &lt;entity ID&gt; and SK =
+					contains(group:&lt;group name&gt;)</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>9</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all business entities</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Use GS1 SK = “entity”</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>10</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all documents (across business entities) for
+					a given document status</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Use GS1 PK = contains(“status#&lt;status&gt;”)</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>11</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all documents (across business entities) for
+					given Document type name</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Not used access pattern</P>
+				</TD>
+			</TR>
+			<TR VALIGN=TOP>
+				<TD WIDTH=28 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>12</P>
+				</TD>
+				<TD WIDTH=283 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Get all documents (across business entities) for
+					given group name</P>
+				</TD>
+				<TD WIDTH=246 STYLE="border: 1px solid #00000a; padding-top: 0in; padding-bottom: 0in; padding-left: 0.08in; padding-right: 0.08in">
+					<P ALIGN=JUSTIFY>Not used access pattern</P>
+				</TD>
+			</TR>
+		</TABLE>
+		<!-- <P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">One need to understand
+		how the global secondary indexes and local secondary indexes work. <FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">If
+		you query or scan a global secondary index, you can only request
+		attributes that are projected into</SPAN></FONT><FONT COLOR="#16191f"><FONT FACE="Arial, serif"><SPAN STYLE="background: #ffffff">
+		</SPAN></FONT></FONT><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">the
+		index. Global secondary index queries cannot fetch attributes from
+		the parent table.</SPAN></FONT></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><SPAN ID="Frame3" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
+			<b><OL START=3>
+				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Complex
+				joins or queries</b></H2>
+			</OL></b>
+		<!-- </SPAN><BR CLEAR=LEFT> --> Joins and complex queries are not supported. We
+		have modelled 1:N and 1:1 relation in the single table above.  If you
+		need reports and other analytics which require joins, it would have
+		to be managed separately. 
+		</P>
+		<!-- <P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">For our product,
+		reporting is a requirement when the task management is enabled. Our
+		plan is to use DynamoDB streams to manage this requirement.</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><SPAN ID="Frame4" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
+			<OL START=4>
+				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Transactions</b></H2>
+			</OL>
+		<!-- </SPAN><BR CLEAR=LEFT> --> Recently (<A HREF="https://aws.amazon.com/blogs/aws/new-amazon-dynamodb-transactions/">click
+		here for blog</A>), AWS has enhanced DynamoDB with native support for
+		transactions. Few references to DynamoDB transactions are listed for
+		convenience (<A HREF="https://www.alexdebrie.com/posts/dynamodb-transactions/">reference
+		1</A>, <A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/transactions.html">reference
+		2</A>). 
+		</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">In our use case, this
+		is remediated as there is only single table and atomicity is provided
+		already. If required to update multiple rows separately, transactions
+		can be used. This is good and needed enhancement.</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><SPAN ID="Frame5" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
+			<OL START=5>
+				<LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Referential
+				Integrity </b>
+				</H2>
+			</OL>
+		<!-- </SPAN><BR CLEAR=LEFT> --> Referential integrity is not supported by NoSQL
+		databases. This has to be managed by application code.  Of Course,
+		looking at the table design, it has to be built into the application
+		logic such that data is inserted correctly. 
+		</P>
+		<!-- <P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Group name from table
+		groups is referenced in DocumentTypes. But this has to be validated
+		at the application-level code as part of the business logic. DynamoDB
+		is not going to be enforce it for you.</P>
+		<!-- <P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">Similarly,
+		documentType and Group name added to the document are to be validated
+		at the application-level code as part of the business logic. Same
+		with when a document is added to the business entity. 
+		</P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><SPAN ID="Frame6" DIR="LTR" STYLE="position: absolute; top: -0in; left: -0in; width: 0.02in; border: none; padding: 0in; background: #ffffff">
+			<OL START=6>
+				<BR CLEAR=LEFT> <LI><H2 CLASS="western" STYLE="border: none; padding: 0in"><b>Aggregations</b></H2>
+			</OL>
+		<!-- </SPAN><BR CLEAR=LEFT> --> Aggregations like sum, min, max are not
+		supported by DynamoDB. There are some counts (childCount in
+		BusinessEntity table) we would be updating as part of the application
+		code when the items are added/deleted.
+		</P>
+		<!-- <P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P> -->
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">If you need any 
+		aggregations to be derived on the fly it is not supported.  This need
+		to be planned from the application side based on use cases. One
+		approach is to use DynamoDB streams, sum/aggregate using Lambda
+		function and insert into a summary table. Refer to the related link
+		from <A HREF="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-gsi-aggregation.html">DynamoDB
+		Developer Guide.</A> By the way, DynamoDB streams is nice pattern to
+		manage the main data changes, for example, if your audit requirements
+		mandate change log to be available for compliance reasons and/or to
+		have the data streamed to reporting system.</P>
+		<OL START=7>
+			<LI><H2 CLASS="western"><b>Sorting</b></H2>
+		</OL>
+		<P STYLE="margin-bottom: 0.11in">Sorting is restricted in DynamoDB.
+		<FONT COLOR="#16191f">Items with the same partition key value are
+		stored in sorted order by sort key. </FONT>
+		</P>
+		<P STYLE="margin-bottom: 0.11in"><FONT COLOR="#16191f">If&nbsp;</FONT><FONT FACE="Courier New, serif"><FONT SIZE=2><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt"><SPAN STYLE="background: #f2f3f3">ScanIndexForward</SPAN></FONT></FONT></FONT></FONT></FONT><FONT COLOR="#16191f">&nbsp;is&nbsp;</FONT><FONT FACE="Courier New, serif"><FONT SIZE=2><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt"><SPAN STYLE="background: #f2f3f3">true
+		(in your query)</SPAN></FONT></FONT></FONT></FONT></FONT><FONT COLOR="#16191f">,
+		DynamoDB returns the results in the order in which they are stored
+		(by sort key value). This is the default behavior.
+		If&nbsp;</FONT><FONT FACE="Courier New, serif"><FONT SIZE=2><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt"><SPAN STYLE="background: #f2f3f3">ScanIndexForward</SPAN></FONT></FONT></FONT></FONT></FONT><FONT COLOR="#16191f">&nbsp;is&nbsp;</FONT><FONT FACE="Courier New, serif"><FONT SIZE=2><FONT COLOR="#16191f"><FONT FACE="Calibri, serif"><FONT SIZE=2 STYLE="font-size: 11pt"><SPAN STYLE="background: #f2f3f3">false</SPAN></FONT></FONT></FONT></FONT></FONT><FONT COLOR="#16191f">,
+		DynamoDB reads the results in reverse order by sort key value, and
+		then returns the results to the client</FONT>.</P>
+		<P STYLE="margin-bottom: 0.11in">You need to be cognizant of this so
+		that if you have grid or similar widget, you cannot sort by multiple
+		grid columns or any column of your choice. You might want to look at
+		your ui flow/design such that you can provide local filters and/or
+		global filters or provide some kind of search and view details
+		approaches. 
+		</P>
+		<P STYLE="margin-bottom: 0.11in">One need to re-look at their
+		requirements as providing unlimited data on the ui screen is just not
+		efficient neither to the user or to the health of the backend that is
+		fetching these.</P>
+		<OL START=8>
+			<LI><H2 CLASS="western"><b>Paginations</b></H2>
+		</OL>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">DynamoDB query/scan
+		does not fetch all the items. These are paginated as there is a limit
+		of 1 MB on an individual request. This is a good feature where
+		pagination is provided by default. 
+		</P>
+		<H1 CLASS="western"><A NAME="_4._Summary"></A>4. Summary</H1>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in">NoSQL databases are
+		architected for horizontal scalability. There are limits on how you
+		use the system and this makes the system bounded for better
+		performance. These limits guide <FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">you
+		to plan your application access patterns and design your data model,
+		upfront, so that your database provides predictable performance at
+		any scale. Instead of reshaping data when a query is processed (as an
+		RDBMS system does), a NoSQL database organizes data so that its shape
+		in the database corresponds with what will be queried. This is a key
+		factor in increasing speed and scalability. It is very important to
+		have an understanding how DynamodB stores the data under the hood.</SPAN></FONT></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">NoSQL
+		design requires a different mindset than RDBMS design and has
+		learning curve.  Several things that you take for granted in RDMS
+		world (like referential data integrity, aggregations) become
+		application concerns to be managed. DynamoDB streams certainly
+		provides cleaner and easier approach to manage these concerns at the
+		application level but requires additional effort. DynamoDB avoids any
+		piece of functionality (compared to RDBMS, in traditional RDBMS these
+		are joins, aggregations, referential integrity, sorting on any
+		column) that impacts speed and scalability.</SPAN></FONT></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><FONT COLOR="#16191f"><SPAN STYLE="background: #ffffff">Sorting
+		is limited to sort keys (primary or indexes). Pagination is provided
+		as part of the query/scan operations which is nice feature.</SPAN></FONT></P>
+		<P ALIGN=JUSTIFY STYLE="margin-bottom: 0.11in"><BR><BR>
+		</P>
+		<p></p>
+		<p></p>
+		<p>if you have any questions, pelase feel free to <a href="mailto:brahmeswara.r.yerrabolu@gmail.com"> email me </a> directly for now.</p>
 
-  </div>
-
-</div>
-    <!-- /.row -->
-
+	</div>  
+	
+	</div> <!-- /.row -->	
+	
   </div>
   <!-- /.container -->
 

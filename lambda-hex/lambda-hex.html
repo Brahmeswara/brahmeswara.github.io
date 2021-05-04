@@ -1,97 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
 <HEAD>
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
 	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
 	<META NAME="AUTHOR" CONTENT="Brahmeswara">
-	<META NAME="CREATED" CONTENT="20210411;44100000000000">
+	<META NAME="CREATED" CONTENT="20201030;53100000000000">
 	<META NAME="CHANGEDBY" CONTENT="Brahmeswara">
-	<META NAME="CHANGED" CONTENT="20210419;81600000000000">
+	<META NAME="CHANGED" CONTENT="20210503;223400000000000">
 	<META NAME="AppVersion" CONTENT="16.0000">
 	<META NAME="DocSecurity" CONTENT="0">
 	<META NAME="HyperlinksChanged" CONTENT="false">
 	<META NAME="LinksUpToDate" CONTENT="false">
 	<META NAME="ScaleCrop" CONTENT="false">
 	<META NAME="ShareDoc" CONTENT="false">
-  <title>Blog Post - Architecting and Organizing: Serverless Microservices</title>
 	<STYLE TYPE="text/css">
-
-
 	<!--
 		@page { margin: 1in }
 		P { margin-bottom: 0.08in; direction: ltr; widows: 2; orphans: 2 }
-		H1 { margin-bottom: 0in; direction: ltr; color: #2f5496; page-break-inside: avoid; widows: 2; orphans: 2 }
-		H1.western { font-family: "Calibri Light", serif; font-size: 16pt }
-		H1.cjk { font-size: 16pt }
+		H1 { margin-top: 0.22in; margin-bottom: 0in; direction: ltr; color: #2f5496; line-height: 100%; page-break-inside: avoid; widows: 2; orphans: 2 }
+		H1.western { font-family: "Calibri Light", serif; font-size: 16pt; font-weight: normal }
+		H1.cjk { font-size: 16pt; font-weight: normal }
 		H1.ctl { font-family: ; font-size: 16pt; font-weight: normal }
-		H2 { margin-left: 0.25in; margin-top: 0in; margin-bottom: 0in; direction: ltr; color: #2f5496; page-break-inside: avoid; widows: 2; orphans: 2 }
-		H2.western { font-family: "Calibri Light", serif; font-size: 13pt; font-weight: normal }
-		H2.cjk { font-family: "Arial"; font-size: 13pt; font-weight: normal }
-		H2.ctl { font-family:  font-size: 13pt; font-weight: normal }
-		A:link { color: #0000ff; }
+		A:link { color: #0000ff; so-language: zxx }
 	-->
 	</STYLE>
-  <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Custom styles for this template -->
-  <link href="css/blog-post.css" rel="stylesheet">
 </HEAD>
-
-<body>
-
-  <!-- Page Content -->
-  <div class="container">
-
-    <div class="row">
-
-      <!-- Sidebar Widgets Column -->
-      <div class="col-md-3">
-
-        <!-- Side Widget -->
-        <div class="card my-4">
-          <h5 class="card-header">Brahmeswara Yerrabolu</h5>
-          <div class="card-body">
-            Experienced product development professional. Certified AWS Solution Architect Associate.
-          </div>
-        </div>
-        <!-- Side Widget -->
-        <div class="card my-4">
-          <h5 class="card-header">Blogs List</h5>
-          <div class="card-body">
-            <a href="sl-ms.html"> Architecting and Organizing: Serverless Microservices</a>
-            <hr>
-            <a href="db-choice.html"> Database Choice: SQL or NoSQL</a>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Post Content Column -->
-      <div class="col-lg-9">
-	
-	      <!-- Title -->
-        <h1 class="mt-4"> Architecting and Organizing: Serverless Microservices</h1>
-        <!-- Author -->
-        <p class="lead">
-          by
-          <a href="#">Brahmeswara R Yerrabolu </a>
-        </p>
-        <hr>
-        <!-- Date/Time -->
-        <p>Posted on May 04, 2021</p>
-        <hr> 
-
-        <!-- Post Content -->
-
-<P><FONT SIZE=3><SPAN LANG="en-US"></SPAN>This article is about how to
+<BODY LANG="en-IN" LINK="#0000ff" DIR="LTR">
+<P LANG="en-US"><BR><BR>
+</P>
+<P LANG="en-US"><BR><BR>
+</P>
+<P><FONT SIZE=6><SPAN LANG="en-US">Organizing and architecting:
+Serverless backend Microservices</SPAN></FONT></P>
+<P LANG="en-US"><BR><BR>
+</P>
+<P><FONT SIZE=3><SPAN LANG="en-US">This article is about how to
 architect microservices and organize your codebase to develop
 serverless (using AWS api gateway, Lambda functions and AWS DynamoDB)
 backend microservices and core business logic such that, they are</SPAN></FONT></P>
-
+<P LANG="en-US"><BR><BR>
+</P>
 <OL>
 	<LI><P><FONT SIZE=3><SPAN LANG="en-US">Well-designed: business logic
 	is independent of any external concerns (like database or ui or
@@ -113,18 +62,20 @@ external services handling) loosely coupled using <A HREF="https://en.wikipedia.
 inversion</A>  (Another good video link on <A HREF="http://misko.hevery.com/2008/11/11/clean-code-talks-dependency-injection/">dependency
 injection</A>). If done, correctly, this makes the system flexible,
 can be enhanced easily and testable.</SPAN></FONT></P>
-
+<P LANG="en-US"><BR><BR>
+</P>
 <P ALIGN=JUSTIFY><FONT SIZE=3>This article has the following areas if
 you would like to jump back and forth instead of reading as one
 single item.</FONT></P>
-<P><FONT SIZE=3><SPAN LANG="en-US"><A HREF="#Concepts">1.  Concepts</A></SPAN></FONT></P>
+<P><FONT SIZE=3><SPAN LANG="en-US">1.  Concepts</SPAN></FONT></P>
 <P><FONT SIZE=3><SPAN LANG="en-US">2.  Implementation</SPAN></FONT></P>
 <P><FONT SIZE=3><SPAN LANG="en-US">3.  Test Strategy</SPAN></FONT></P>
 <P><FONT SIZE=3><SPAN LANG="en-US">4.  Example Code</SPAN></FONT></P>
 <P><FONT SIZE=3><SPAN LANG="en-US">5. Summary</SPAN></FONT></P>
-<H1 CLASS="western"><SPAN LANG="en-US"><A NAME="Concepts">1. Concepts</A></SPAN></H1>
-
-<P><FONT SIZE=3><SPAN LANG="en-US"></SPAN>Let us conceptualize how to apply
+<H1 CLASS="western"><SPAN LANG="en-US">1. Concepts</SPAN></H1>
+<P LANG="en-US"><BR><BR>
+</P>
+<P><FONT SIZE=3><SPAN LANG="en-US">Let us conceptualize how to apply
 this to our use case (Please refer to my earlier blog which describes
 the <A HREF="https://brahmeswara.github.io/db-choice.html">use case</A>
 ). </SPAN></FONT>
@@ -134,8 +85,11 @@ architecture would look something like the one below (taken from the
 reference).</SPAN></FONT></P>
 <P><FONT SIZE=3><SPAN LANG="en-US">Fig 1: High Level Overview </SPAN></FONT>
 </P>
-<P><IMG SRC="lambda-hex/sls-ms-clean-arch.png" NAME="Picture 2" ALIGN=BOTTOM WIDTH=679 HEIGHT=336 BORDER=0></P>
-
+<P LANG="en-US"><BR><BR>
+</P>
+<P><IMG SRC="8da29449a30b825bb45a75ee43766a47_html_7d233db4.png" NAME="Picture 2" ALIGN=BOTTOM WIDTH=679 HEIGHT=336 BORDER=0></P>
+<P LANG="en-US"><BR><BR>
+</P>
 <P><FONT SIZE=3><SPAN LANG="en-US">The concepts that define the
 business logic are </SPAN></FONT>
 </P>
@@ -193,7 +147,8 @@ inner circles. </SPAN></FONT></FONT>
 </P>
 <H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff">2.
 How does this work?</SPAN></FONT></H1>
-
+<P><BR><BR>
+</P>
 <P><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">The
 business logic is used by different external services via transport
 adaptors. Each of these can create their variant of the application
@@ -206,8 +161,11 @@ DynamoDB.</SPAN></FONT></FONT></P>
 <P><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">Fig
 2: Flow for an API call using AWS API Gateway and Lambda </SPAN></FONT></FONT>
 </P>
-<P><IMG SRC="lambda-hex/sls-ms-sample-flow.png" NAME="Picture 3" ALIGN=BOTTOM WIDTH=689 HEIGHT=140 BORDER=0></P>
-
+<P><BR><BR>
+</P>
+<P><IMG SRC="8da29449a30b825bb45a75ee43766a47_html_955af903.png" NAME="Picture 3" ALIGN=BOTTOM WIDTH=689 HEIGHT=140 BORDER=0></P>
+<P><BR><BR>
+</P>
 <P><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">Below
 are the high-level steps </SPAN></FONT></FONT>
 </P>
@@ -231,7 +189,8 @@ are the high-level steps </SPAN></FONT></FONT>
 	it would be Business logic use case class and DynamoDBAdaptor class
 	as data source plugged into the business logic service.</SPAN></FONT></FONT></P>
 </OL>
-
+<P STYLE="margin-left: 0.5in"><BR><BR>
+</P>
 <P STYLE="margin-left: 0.5in"><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">Note,
 your code does not use new operator to create use case class
 instance. It is called via dependency injection container (DI
@@ -239,7 +198,8 @@ container). DI container knows how to write the dependencies. In this
 case, when the use case object is injected, datasource adaptor also
 injected into use case object. </SPAN></FONT></FONT>
 </P>
-
+<P STYLE="margin-left: 0.5in"><BR><BR>
+</P>
 <OL START=5>
 	<LI><P><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">APIGatewayLamdbaAdaptor
 	starts to drive the process by calling business logic which in turn
@@ -263,7 +223,8 @@ logic called from other adaptors like event or cron job etc.</SPAN></FONT></FONT
 us look at how testable this approach is.</SPAN></FONT></FONT></P>
 <H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff">3.
 Test Strategy</SPAN></FONT></H1>
-
+<P><BR><BR>
+</P>
 <P><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">Reliable
 and faster test suite is a must have for better development velocity.
 Test strategy need to be thought as part of the initial design. </SPAN></FONT></FONT>
@@ -298,7 +259,8 @@ system that is well-designed, flexible and testable. Let us look some
 sample code next.</SPAN></FONT></FONT></P>
 <H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff">4.
 Example Code</SPAN></FONT></H1>
-
+<P><BR><BR>
+</P>
 <P ALIGN=JUSTIFY><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">This
 section presents the code base that is developed using typescript,
 NodeJS, AWS API gateway, Lambda function and DynamoDB (NoSQL
@@ -316,16 +278,20 @@ into multiple git repositories is driven by (a) code re-use (b)
 manage the dependencies such that build/deploy only those required to
 be build/deployed in your CI/CD cycle. </SPAN></FONT></FONT>
 </P>
-
+<P><BR><BR>
+</P>
 <P><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">Fig
 below represents the backend microservices higher level design.	</SPAN></FONT></FONT></P>
-
-<P><IMG SRC="lambda-hex/sls-ms-hl-arch.png" NAME="Picture 1" ALIGN=BOTTOM WIDTH=645 HEIGHT=268 BORDER=0></P>
-
+<P><BR><BR>
+</P>
+<P><IMG SRC="8da29449a30b825bb45a75ee43766a47_html_51141919.png" NAME="Picture 1" ALIGN=BOTTOM WIDTH=645 HEIGHT=268 BORDER=0></P>
+<P><BR><BR>
+</P>
 <P><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">I
 have shared the code for config services only (and not for the
 document services) by making the relevant git repo public.</SPAN></FONT></FONT></P>
-
+<P><BR><BR>
+</P>
 <P><FONT SIZE=3><SPAN LANG="en-US">Components or modules are
 organized as below (bp stands for base platform).</SPAN></FONT></P>
 <UL>
@@ -335,7 +301,8 @@ organized as below (bp stands for base platform).</SPAN></FONT></P>
 	here</A> to see the git repo. </SPAN></FONT>
 	</P>
 </UL>
-
+<P LANG="en-US" STYLE="margin-left: 0.5in"><BR><BR>
+</P>
 <UL>
 	<LI><P><FONT SIZE=3><SPAN LANG="en-US"><A HREF="https://github.com/Brahmeswara/common-utils/tree/master">common-utils</A>
 	– application specific utilities like logger, dependency injector
@@ -351,7 +318,8 @@ here</A> to see the git repo contents.</SPAN></FONT></P>
 	logic is developed and tested independent of any external services. </SPAN></FONT>
 	</P>
 </UL>
-
+<P LANG="en-US" STYLE="margin-left: 0.5in"><BR><BR>
+</P>
 <UL>
 	<LI><P><FONT SIZE=3><SPAN LANG="en-US">app-deps – this contains
 	application specific dependencies and how to build a lambda layer
@@ -359,7 +327,8 @@ here</A> to see the git repo contents.</SPAN></FONT></P>
 	bp-config-core. <A HREF="https://github.com/Brahmeswara/bp-config-core/tree/main">Click
 	here</A> to see the git repo contents.</SPAN></FONT></P>
 </UL>
-
+<P LANG="en-US" STYLE="margin-left: 0.5in"><BR><BR>
+</P>
 <UL>
 	<LI><P><FONT SIZE=3><SPAN LANG="en-US"><A HREF="https://github.com/Brahmeswara/bp-config-app">bp-config-app</A>
 	-- This is backend application which uses the above packages. Here
@@ -369,31 +338,19 @@ here</A> to see the git repo contents.</SPAN></FONT></P>
 </UL>
 <P STYLE="text-indent: 0.5in"><FONT SIZE=3><SPAN LANG="en-US"><A HREF="https://github.com/Brahmeswara/bp-config-app">Click
 here</A> to see the code base in github.</SPAN></FONT></P>
-
+<P><BR><BR>
+</P>
 <H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff">5.
 Summary</SPAN></FONT></H1>
-
+<P LANG="en-US"><BR><BR>
+</P>
 <P><FONT SIZE=3><SPAN LANG="en-US">By conforming to simple rules and
 following dependency rules, you develop a system that is loosely
 coupled, flexible and testable. If any parts of the external system
 like database or web framework become obsolete over the time, you can
 replace them with less or no impact on the rest of system. Follow the
 DRY (don’t repeat yourself) rules to have the clean code.</SPAN></FONT></P>
-
-
-  </div>
-
-</div>
-    <!-- /.row -->
-
-  </div>
-  <!-- /.container -->
-
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
-</html>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>
