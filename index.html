@@ -16,7 +16,7 @@
 	<META NAME="LinksUpToDate" CONTENT="false">
 	<META NAME="ScaleCrop" CONTENT="false">
 	<META NAME="ShareDoc" CONTENT="false">
-  <title>Blog Post - Architecting and Organizing: Serverless Microservices</title>
+  <title>Blog Post - Clean Architecture Approach: Architecting Serverless Backend Services (without vendor lock-in)</title>
 	<STYLE TYPE="text/css">
 
 
@@ -62,7 +62,7 @@
         <div class="card my-4">
           <h5 class="card-header">Blogs List</h5>
           <div class="card-body">
-            <a href="sl-ms.html"> Architecting and Organizing: Serverless Microservices</a>
+            <a href="sl-ms.html"> Clean Architecture Approach: Architecting Serverless Backend Services (without vendor lock-in)</a>
             <hr>
             <a href="db-choice.html"> Database Choice: SQL or NoSQL</a>
           </div>
@@ -74,7 +74,7 @@
       <div class="col-lg-9">
 	
 	      <!-- Title -->
-        <h1 class="mt-4"> Architecting and Organizing: Serverless Microservices</h1>
+        <h1 class="mt-4"> Clean Architecture Approach: Architecting Serverless Backend Services (without vendor lock-in)</h1>
         <!-- Author -->
         <p class="lead">
           by
@@ -102,6 +102,8 @@ backend microservices and core business logic such that, they are</SPAN></FONT><
 	<LI><P><FONT SIZE=3><SPAN LANG="en-US">Testable Code. Business
 	logic/rules are fully testable independent of the external services
 	depended on.</SPAN></FONT></P>
+	<LI><P><FONT SIZE=3><SPAN LANG="en-US">Core business logic is vendor (cloud provider 
+	in this case) agnostic. </SPAN></FONT></P>
 </OL>
 <P><FONT SIZE=3><SPAN LANG="en-US">There are various architectural
 patterns that define these characteristics. I prefer to go with <A HREF="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">clean
@@ -112,16 +114,18 @@ developing your concerns/modules (business logic, databases and
 external services handling) loosely coupled using <A HREF="https://en.wikipedia.org/wiki/Dependency_inversion_principle">dependency
 inversion</A>  (Another good video link on <A HREF="http://misko.hevery.com/2008/11/11/clean-code-talks-dependency-injection/">dependency
 injection</A>). If done, correctly, this makes the system flexible,
-can be enhanced easily and testable.</SPAN></FONT></P>
+can be enhanced easily and testable.This architecture pattern does not lock-in your 
+core business logic to any particular cloud provider.</SPAN></FONT></P>
 
 <P ALIGN=JUSTIFY><FONT SIZE=3>This article has the following areas if
 you would like to jump back and forth instead of reading as one
 single item.</FONT></P>
-<P><FONT SIZE=3><SPAN LANG="en-US"><A HREF="#Concepts">1.  Concepts</A></SPAN></FONT></P>
-<P><FONT SIZE=3><SPAN LANG="en-US">2.  Implementation</SPAN></FONT></P>
-<P><FONT SIZE=3><SPAN LANG="en-US">3.  Test Strategy</SPAN></FONT></P>
-<P><FONT SIZE=3><SPAN LANG="en-US">4.  Example Code</SPAN></FONT></P>
-<P><FONT SIZE=3><SPAN LANG="en-US">5. Summary</SPAN></FONT></P>
+<P><FONT SIZE=3><SPAN LANG="en-US"><A HREF="#_1._Concepts">1.  Concepts</A></SPAN></FONT></P>
+<P><FONT SIZE=3><SPAN LANG="en-US"><A HREF="#_2._impl">2.  How Does This Work?</A></SPAN></FONT></P>
+<P><FONT SIZE=3><SPAN LANG="en-US"><A HREF="#_3._TestStrategy">3.  Test Strategy</A></SPAN></FONT></P>
+<P><FONT SIZE=3><SPAN LANG="en-US"><A HREF="#_4._ExampleCode">4.  Example Code</A></SPAN></FONT></P>
+<P><FONT SIZE=3><SPAN LANG="en-US"><A HREF="#_5._Summary">5. Summary</A></SPAN></FONT></P>
+
 <H1 CLASS="western"><SPAN LANG="en-US"><A NAME="Concepts">1. Concepts</A></SPAN></H1>
 
 <P><FONT SIZE=3><SPAN LANG="en-US"></SPAN>Let us conceptualize how to apply
@@ -191,7 +195,7 @@ most convenient for the inner circle that is business logic. Make
 sure that anything in the outer circles does not have impact on the
 inner circles. </SPAN></FONT></FONT>
 </P>
-<H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff">2.
+<H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff"><A NAME="_2._impl"></A>2.
 How does this work?</SPAN></FONT></H1>
 
 <P><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">The
@@ -261,7 +265,7 @@ impacting the rest of the system. Similarly, we can have the business
 logic called from other adaptors like event or cron job etc.</SPAN></FONT></FONT></P>
 <P><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">Let
 us look at how testable this approach is.</SPAN></FONT></FONT></P>
-<H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff">3.
+<H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff"><A NAME="_3._TestStrategy"></A>3.
 Test Strategy</SPAN></FONT></H1>
 
 <P><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">Reliable
@@ -296,7 +300,7 @@ ideal for your use case. </SPAN></FONT></FONT>
 the above strategy, application is testable easily. Now we have
 system that is well-designed, flexible and testable. Let us look some
 sample code next.</SPAN></FONT></FONT></P>
-<H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff">4.
+<H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff"><A NAME="_4._ExampleCode"></A>4.
 Example Code</SPAN></FONT></H1>
 
 <P ALIGN=JUSTIFY><FONT COLOR="#000000"><FONT SIZE=3><SPAN STYLE="background: #ffffff">This
@@ -370,7 +374,7 @@ here</A> to see the git repo contents.</SPAN></FONT></P>
 <P STYLE="text-indent: 0.5in"><FONT SIZE=3><SPAN LANG="en-US"><A HREF="https://github.com/Brahmeswara/bp-config-app">Click
 here</A> to see the code base in github.</SPAN></FONT></P>
 
-<H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff">5.
+<H1 CLASS="western"><FONT SIZE=5><SPAN STYLE="background: #ffffff"><A NAME="_5._Summary"></A>5.
 Summary</SPAN></FONT></H1>
 
 <P><FONT SIZE=3><SPAN LANG="en-US">By conforming to simple rules and
@@ -386,9 +390,9 @@ DRY (don’t repeat yourself) rules to have the clean code.</SPAN></FONT></P>
 
   </div>
 
-</div>
-    <!-- /.row -->
 
+</div>
+<!-- /.row -->
   </div>
   <!-- /.container -->
 
